@@ -1,0 +1,193 @@
+<include file="Public:header" />
+<link rel="stylesheet" type="text/css" href="__CSS__/order.css" />
+<div class="main-nav">
+	<div class="container">
+		<ul class="list-inline">
+			<li>
+				<a>安全中心</a>
+			</li>
+		</ul>
+	</div>
+</div>
+<div class="contain" style="min-height:550px;">
+	<div class="LoginPanel" style="border:none;">	
+		<div class="flowsteps">
+			<ol class="num4">
+				<li class="first current">
+					<span>
+						<i>1</i>
+						<em>验证手机</em>
+					</span>
+				</li>	
+				<li>
+					<span>
+						<i>2</i>
+						<em>重置密码</em>
+					</span>
+				</li>
+				<li class="last">
+					<span>
+						<i>3</i>
+						<em>完成</em>
+					</span>
+				</li>
+			</ol>
+		</div>
+		<div class="lostpanel" style="display: block;">
+		<form id="page-form" action="" method="post">
+			<input type="hidden" value="" id="id"/>
+           	<input type="hidden" value="" id="vid"/>
+			<div class="head">验证手机</div>
+			<div class="lostpwd">
+				<div class="form-item clear">
+					<div class="input-wrap">
+						<img src="__IMG__/username.jpg"/>
+						<input class="input-regular" type="text" placeholder="手机号码" name="telphone" id="telphone">
+					</div>
+					<div class="input-tip hide" id="errormobile">
+						<img src="__IMG__/err.png"/>
+						<span></span>					
+					</div>
+					<div class="input-tip hide" id="correctmobile">
+						<img src="__IMG__/right.png"/>
+						<span></span>					
+					</div>
+				</div>
+				<div class="form-item validCode clear" >
+					<div class="input-wrap">
+						<img src="__IMG__/password.jpg"/>
+						<input class="input-regular" type="text" placeholder="手机短信验证码" name="vphone" id="vphone">	
+						<button id="send_code" class="btn-light getPhoneVc">获取验证码</button>
+					</div>
+					<div class="input-tip hide" id="errorvphone">
+						<img src="__IMG__/err.png"/>
+						<span></span>					
+					</div>
+					<div class="input-tip hide" id="correctvphone">
+						<img src="__IMG__/right.png"/>
+						<span></span>					
+					</div>
+				</div>
+				<div class="form-item clear" style="margin-left:30px;">
+					<div class="err hide" id="error"></div>
+					<button class="btn-regular btn-orange submit">下一步</button>
+				</div>
+			</div>
+		</form>
+		</div>
+	</div>
+</div>
+<script>
+var STime = '60';//这个变量是倒计时的秒数设置为10就是10秒
+function TimeClose(STime) {  
+    if (STime <= 1)//判断秒数如果为0
+    {           
+        $("#send_code").removeAttr("disabled");
+		//$('#send_code').addClass('blue');
+        $('#send_code').html('重新发送');           
+    }
+    else {            
+        STime--;//减少秒数
+        window.setTimeout('TimeClose('+STime--+')', 1000);//让程序每秒重复执行当前函数。
+        $("#send_code").attr("disabled", "disabled");
+		//$("#send_code").removeClass('blue');
+        $("#send_code").html('等待'+STime+'秒');
+    }
+}
+
+function CheckTelphone(obj) {
+    var v = obj.val();
+    if (v.length <= 0) {
+    	$('#correctmobile').addClass('hide');
+    	$('#errormobile').removeClass('hide');
+        $('#errormobile').children('span').html('请输入手机号码');
+        return false;
+    }
+    if (/^(((\+86|86)?1[3|4|5|7|8][0-9]\d{8})|((\+\d{2})|(\d{2}))\d{11})$/.test(v)) {
+    	 $('#errormobile').addClass('hide');
+         $('#errormobile').children('span').html('');
+         $('#correctmobile').removeClass('hide');
+         return true;
+    }else{
+    	$('#correctmobile').addClass('hide');
+    	$('#errormobile').removeClass('hide');
+        $('#errormobile').children('span').html('手机号码格式错误');            
+        return false;
+    }
+}
+
+function CheckVphone(obj) {
+    var v = obj.val();
+    if (v.length <= 0) {
+    	$('#correctvphone').addClass('hide');
+    	$('#errorvphone').removeClass('hide');
+        $('#errorvphone').children('span').html('请输入手机验证码');
+        return false;
+    }
+    if (/^\d{6}$/.test(v)) {
+        $('#errorvphone').addClass('hide');
+        $('#errorvphone').children('span').html('');
+        return true;
+    }else {
+        $('#errorvphone').removeClass('hide');
+        $('#errorvphone').children('span').html('验证码为6位数字');
+        return false;
+    }
+}
+
+$(function(){		
+	$("#telphone").blur(function () { CheckTelphone($(this)); });
+	$("#vphone").blur(function () { CheckVphone($(this)); });
+
+	$('#send_code').click(function(){ 
+		var telphone = $("#telphone");
+
+		if (CheckTelphone(telphone)){        
+	     	var telphone = telphone.val().replace(/\s+/g, '');	
+	    	$.post('index.php?s=user/verifymobile', {'mobile':telphone}, function(data){
+	          	if(data.status == 1){
+	           		TimeClose(61); 
+	           		$('#errorvphone').addClass('hide');
+	           		$("#id").val(data.id);
+                    $("#vid").val(data.vid);
+              	}else if(data.status == -1){ 
+                	$('#correctvphone').addClass('hide');
+                	$('#errorvphone').removeClass('hide');
+                    $('#errorvphone').children('span').html(data.info);        	
+            	}
+	    	}, "json");
+		}else{
+			$("#send_code").removeAttr("disabled");
+	  	}
+		return false;
+	})
+
+	$('#page-form').submit(function(){
+		var telphone = $("#telphone");
+		var vphone = $("#vphone");
+    	if(CheckTelphone(telphone) && CheckVphone(vphone)){
+     		var telphone = telphone.val();              
+         	var vphone = vphone.val();
+          	var id = $('#id').val();
+          	var vid = $('#vid').val();
+			if(id=='' || vid==''){
+				$('#errorvphone').removeClass('hide');
+		        $('#errorvphone').children('span').html('请先获取验证码');
+				return false;
+			}
+        	$.post('index.php?s=user/verifycode', {'code':vphone,'mobile':telphone,'id':id,'vid':vid}, function(data){                      
+	       		if (data.status == 1) {
+	         		window.location.href = data.url;
+	            } else{
+	            	$('#error').removeClass('hide');
+	              	$('#error').html(data.content); 
+	         	}
+       		}, "json");
+         	return false;
+			}   
+		return false;
+      })
+});
+
+</script>
+<include file="Public:footer" />

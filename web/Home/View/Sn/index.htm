@@ -1,0 +1,199 @@
+<include file="Public:header" />
+<style type="text/css">
+	.border{width:990px;border:1px solid #dfdfdf;float:center;left: 50%;margin: 10px 0 10px -495px;position: relative;min-height:500px;}
+	.bordernav{
+		border: 0 none;display: block;font: inherit;height: 80px;margin: 0;padding: 0;
+	}
+	.bordertext{
+		width:120px;height:30px;text-align:center;font-size:24px;margin-left:40px;padding-top:40px;float:left;
+	}
+	select {
+		border: 1px solid #ccc;border-radius: 3px;height: 27px;line-height: 27px;padding: 2px;width:200px;
+	}
+</style>
+	<div class="border">
+		<form action="" method="post" id="page-form">
+			<div class="bordernav">
+				<div class="bordertext">机型:</div>
+				<div class="bordertext"><input type="radio" name="type" value="1" onclick="check1();"/>车载机</div>
+				<div class="bordertext"><input type="radio" name="type" value="2" onclick="check2();"/>壁挂单机</div>
+				<div class="bordertext"><input type="radio" name="type" value="3" onclick="check2();"/>壁挂远控</div>
+				<div class="bordertext"><input type="radio" name="type" value="4" onclick="check3();"/>悟净机</div>
+			</div>
+			<div style="display:block" id="chezaiji">		
+				<div class="bordernav">
+					<div class="bordertext">颜色:</div>
+					<div class="bordertext"><input type="radio" name="color1" value="1" />黑色</div>
+					<div class="bordertext"><input type="radio" name="color1" value="2" />酒红色</div>
+				</div>
+				<div class="bordernav">
+					<div class="bordertext">数量:</div>
+					<div class="bordertext">
+						<input type="text" size="13" name="number1" id="number1" value="0" />
+					</div>
+					<div class="bordertext" style="font-size:14px;width:220px;">
+						（生成数量会自动添加5%数据）
+					</div>
+				</div>
+			</div>
+			<div style="display:none" id="biguaji">		
+				<div class="bordernav">
+					<div class="bordertext">颜色:</div>
+					<div class="bordertext"><input type="radio" name="color2" value="1" />白色</div>
+				</div>
+				<div class="bordernav">
+					<div class="bordertext">数量:</div>
+					<div class="bordertext">
+						<input type="text" size="13" name="number2" id="number2" value="0" />
+					</div>
+				</div>
+			</div>
+			<div style="display:none;" id="wujingji">
+				<div class="bordernav">
+					<div class="bordertext">大小:</div>
+					<div class="bordertext"><input type="radio" name="size" value="1" />大</div>
+					<div class="bordertext"><input type="radio" name="size" value="2" />中</div>
+					<div class="bordertext"><input type="radio" name="size" value="3" />小</div>
+				</div>			
+				<div class="bordernav" style="height:150px;">
+					<div class="bordertext">颜色:</div>
+					<div class="bordertext"><input type="radio" name="color3" value="1" />科技白</div>
+					<div class="bordertext"><input type="radio" name="color3" value="2" />薄荷蓝</div>
+					<div class="bordertext"><input type="radio" name="color3" value="3" />迷彩绿</div>
+					<div class="bordertext"><input type="radio" name="color3" value="4" />天清蓝</div>
+					<div class="bordertext"><input type="radio" name="color3" value="5" />水色蓝</div>
+					<div class="bordertext"></div>
+					<div class="bordertext"><input type="radio" name="color3" value="6" />咖啡色</div>
+					<div class="bordertext"><input type="radio" name="color3" value="7" />酒红色</div>
+				</div>
+				<div class="bordernav">
+					<div class="bordertext">数量:</div>
+					<div class="bordertext">
+						<input type="text" size="13" name="number3" id="number3" value="0" />
+					</div>
+				</div>
+			</div>	
+			<div class="bordernav">
+				<div class="bordertext">经销商:</div>
+				<div class="bordertext">
+					<div class="controls">
+						<select name="dealer" id="dealer">
+							<option value="" >请选择经销商</option>
+							<option value="航天通信北京分公司" >航天通信北京分公司</option>
+							<option value="广州金琥环保科技有限公司" >广州金琥环保科技有限公司</option>
+							<option value="四川民望新能源科技开发有限公司" >四川民望新能源科技开发有限公司</option>
+							<option value="上海澳马车辆物资采购有限公司" >上海澳马车辆物资采购有限公司</option>
+							<option value="北京佰朔泉科技有限公司" >北京佰朔泉科技有限公司</option>
+							<option value="北京市傲博胜咨询有限公司" >北京市傲博胜咨询有限公司</option>
+							<option value="东莞市宇洁新材料有限公司" >东莞市宇洁新材料有限公司</option>
+							<option value="淘微网络科技（上海）有限公司" >淘微网络科技（上海）有限公司</option>
+							<option value="元天百利科技有限公司" >元天百利科技有限公司</option>
+							<option value="上海佳潇信息科技有限公司" >上海佳潇信息科技有限公司</option>
+						</select>
+					</div>
+				</div>
+			</div>	
+			<div class="bordernav" style="height:40px; margin-top:50px;">
+				<button style="float:left;font-size:20px;margin-left:450px;" type="submit">确定</button>				
+			</div>
+		</form>	
+		<div class="bordernav" style="height:40px; margin-top:50px;">
+			<a target="_blank" href="index.php?s=sn/output"><button style="float:right;font-size:20px;margin-right:450px;">打印表格</button></a>
+		</div>
+		<div class="bordernav" style="height:40px;">
+			
+		</div>		
+	</div>
+	<script type="text/javascript">  
+		function check1(){
+			$('#biguaji').hide();
+			$('#wujingji').hide();
+			$('#chezaiji').show();
+		}
+		function check2(){
+			$('#chezaiji').hide();
+			$('#wujingji').hide();
+			$('#biguaji').show();
+		}
+		function check3(){
+			$('#biguaji').hide();
+			$('#chezaiji').hide();
+			$('#wujingji').show();
+		}
+		function check(){  
+			var type = $('input[name="type"]:checked').val();
+			/**
+			var dealerid=[];
+			var obj = document.getElementById("dealer");
+			for(var i=0;i<obj.options.length;i++){
+			    if(obj.options[i].selected){
+			    	dealerid.push(obj.options[i].value);
+			    }
+			}	
+			**/	
+			if(type==null){  
+				alert('请选择机型');  
+				return false;  
+			}else if(type == 4){
+				var size = $('input[name="size"]:checked').val();
+				if(size==null){
+					alert("请选择大小");
+					return false;
+				}
+				var color = $('input[name="color3"]:checked').val();
+				if(color==null){
+					alert("请选择颜色");
+					return false;
+				}			
+				var number = $("#number3").val();	
+				if(number==0){  
+					alert('请输入数量');  
+					return false;  
+				}			
+				return true;
+			}else if(type == 1){
+				var color = $('input[name="color1"]:checked').val();
+				if(color==null){
+					alert("请选择颜色");
+					return false;
+				}			
+				var number = $("#number1").val();	
+				if(number==0){  
+					alert('请输入数量');  
+					return false;  
+				}
+				return true;
+			}else if(type == 2 || type == 3){
+				var color = $('input[name="color2"]:checked').val();
+				if(color==null){
+					alert("请选择颜色");
+					return false;
+				}			
+				var number = $("#number2").val();	
+				if(number==0){  
+					alert('请输入数量');  
+					return false;  
+				}
+				return true;
+			}
+					  
+		 } 
+		$(function () {
+			$("#page-form").submit(function () {		
+	            if (check()) {            
+	                var self = $(this);
+	            	$.post(self.attr("action"), self.serialize(), success, "json");
+	            }
+	            return false;
+			});
+			function success(data) {
+	            if (data.status == 1) {
+		            alert(data.info);
+	            	window.location.href = data.url;
+	            }else {
+	                $("#error").html(data.content);
+	            }
+			}
+	    }) 
+	</script> 
+<include file="Public:footer" />

@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="language" content="en" />
+
+	<title>{$WEB_SITE_TITLE |default=C('WEB_SITE_TITLE')}</title>
+    <meta name="keywords" content="{$WEB_SITE_KEYWORDS |default=C('WEB_SITE_KEYWORDS')}" />
+    <meta name="description" content="{$WEB_SITE_DESCRIPTION |default=C('WEB_SITE_DESCRIPTION')}" />
+	
+	<link rel="stylesheet" type="text/css" href="__CSS__/style.css" charset="utf-8"/>
+	<link rel="icon" href="__IMG__/favicon.ico" type="image/x-icon" />
+	  
+	<!--baidu-->
+	<!--
+	<script type="text/javascript">
+	var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+	document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F73a91bab4697d086ae15eb5d9409b9d7' type='text/javascript'%3E%3C/script%3E"));
+	</script>
+	
+	<script>
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "//hm.baidu.com/hm.js?16435cdfdec28d68a0bb2e8d8ff816cf";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+	
+	<script>
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "//hm.baidu.com/hm.js?73a91bab4697d086ae15eb5d9409b9d7";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+	--> 
+	<!--baidu-end-->
+	 	
+	<script type="text/javascript" src="__JS__/jquery.js"></script>
+	<script type="text/javascript" src="__JS__/SuperSlide.js"></script>
+	<script type="text/javascript" src="__JS__/smartFloat.js"></script>
+	<script type="text/javascript" src="__JS__/header.js"></script>
+</head>
+<body>
+	<div class="wapper">
+		<div class="nav">
+			<a href="./index.php"><div class="nav_logo"></div></a>			
+			<a target="_blank" href="http://weibo.com/hangtianxunchi"><div class="nav_logo1" id="weibologo1"></div></a>
+			<div class="nav_logo2" id="weixinlogo1"></div>
+			<div class="weixin3" id="weixin1"></div>
+			<div class="module-dd subnav" id="product">
+				<div class="subnav-content subnav-products clearfix reduced-v1">
+					<ul class="items devices">
+						<li class="device">
+							<a href="index.php?s=/car">
+							<strong>车载</strong> · 空气净化器
+							</a>
+						</li>						
+						<li class="device">
+							<a href="index.php?s=/index">
+							<strong>悟净</strong> · 空气净化器
+							</a>
+						</li>
+						<!--
+						<li class="device">
+							<a href="">
+							<strong>悟净壁挂式</strong> · 空气净化器
+							</a>
+						</li>
+						-->
+					</ul>
+					<div class="ftr">
+						<ul>
+							<li>
+								<a>帮你搞定异味和PM2.5污染</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="module-d subnav" id="order">
+				<div class="subnav-content subnav-products clearfix reduced-v1">
+					<ul class="items devices">
+						<li class="device">
+							<a href="index.php?s=/user/order">
+							<strong>我的订单</strong>
+							</a>
+						</li>
+					</ul>						
+				</div>
+			</div>
+			<div class="sign-in-form" style="display: none;" id="sign">
+				<h5>登录到航天迅驰官网</h5>
+				<form id="signin-form" class="form-horizontal" method="post" action="">
+					<div id="signin-form-errors"></div>
+					<fieldset>
+						<div class="form-group">
+							<div class="col-lg-12 col-md-12 col-sm-12">
+								<input class="form-control js-placeholder" type="text" value="" placeholder="手机号" id="mobile">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-lg-12 col-md-12 col-sm-12">
+								<input class="form-control js-placeholder" type="password" value="" placeholder="密码"  id="pass">
+								<p class="js-fgt_pswd fgt_pswd">
+									<a href="index.php?s=user/verifymobile">忘记了密码?</a>
+								</p>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-lg-12 col-md-12 col-sm-12">
+								<button id="signin-form-submit" class="btn btn-default" value="" tabindex="5" name="submit" type="submit" data-original-title="" title="">
+									登录
+								</button>
+							</div>
+						</div>
+					</fieldset>
+				</form>
+				<div class="signin-block">
+					<div class="signin-arrow"></div>
+					<div class="register-user">
+						新用户来到航天迅驰官网?
+						<a class="link-red with-arrow" href="index.php?s=user/signup">
+							> 注册
+						</a>
+					</div>
+				</div>			
+			</div>
+		</div>
+	</div>

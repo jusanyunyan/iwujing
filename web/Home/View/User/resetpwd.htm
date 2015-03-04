@@ -1,0 +1,175 @@
+<include file="Public:header" />
+<link rel="stylesheet" type="text/css" href="__CSS__/order.css" />
+<div class="main-nav">
+	<div class="container">
+		<ul class="list-inline">
+			<li>
+				<a>安全中心</a>
+			</li>
+		</ul>
+	</div>
+</div>
+<div class="contain" style="min-height:550px;">
+	<div class="LoginPanel" style="border:none;">	
+		<div class="flowsteps">
+			<ol class="num4">
+				<li class="first current done">
+					<span>
+						<i>1</i>
+						<em>验证手机</em>
+					</span>
+				</li>	
+				<li class="current">
+					<span>
+						<i>2</i>
+						<em>重置密码</em>
+					</span>
+				</li>
+				<li class="last">
+					<span>
+						<i>3</i>
+						<em>完成</em>
+					</span>
+				</li>
+			</ol>
+		</div>
+		<div class="lostpanel" style="display: block;">
+			<form id="page-form" action="" method="post">
+				<div class="head">重置密码</div>
+				<div class="regin">
+					<div class="form-item clear">
+						<div class="input-wrap">
+							<img src="__IMG__/password.jpg"/>
+							<input class="input-regular" type="password" placeholder="输入密码（不小于6位）" name="password" id="pwd">
+						</div>
+						<div class="input-tip hide" id="errorpwd">
+							<img src="__IMG__/err.png"/>
+							<span></span>					
+						</div>
+						<div class="input-tip hide" id="correctpwd">
+							<img src="__IMG__/right.png"/>
+							<span></span>					
+						</div>
+					</div>
+					<div class="form-item clear" style="padding-left:30px;">
+						<div class="input-wrap">
+							<input class="input-regular" type="password" placeholder="确认密码" name="repeat-password" id="repwd">
+						</div>
+						<div class="input-tip hide" id="errorrepwd">
+							<img src="__IMG__/err.png"/>
+							<span></span>					
+						</div>
+						<div class="input-tip hide" id="correctrepwd">
+							<img src="__IMG__/right.png"/>
+							<span></span>					
+						</div>
+					</div>
+					<div class="form-item clear" style="padding-left:30px;">
+						<div class="err hide" id="error"></div>
+						<button class="confirm_button" type="submit">确认</button>
+						<a href="javascript:history.back(-1)">
+						<div class="return_button">上一步</div>	
+						</a>					
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<style>
+.confirm_button {
+    background-color: #ff4a00;
+    border: 1px solid #ff4a00;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+    line-height: 28px;
+    margin-bottom: 0;
+    padding: 0;
+    text-align: center;
+    width: 110px;
+    border-radius: 3px;
+}
+.return_button {
+	background-color: #A8A8A8;
+    border: 1px solid #A8A8A8;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+    line-height: 30px;
+    margin-bottom: 0;
+    padding: 0;
+    text-align: center;
+    width: 110px;
+    border-radius: 3px;
+}
+</style>
+<script>
+function CheckPwd(obj) {
+    var v = obj.val();
+    if (v.length <= 0) {
+    	$('#correctpwd').addClass('hide');
+    	$('#errorpwd').removeClass('hide');
+        $('#errorpwd').children('span').html('请输入密码');
+        return false;
+    }else if (v.length <=6){
+    	$('#correctpwd').addClass('hide');
+    	$('#errorpwd').removeClass('hide');
+        $('#errorpwd').children('span').html('密码长度需大于6位');
+        return false;
+    }else {
+    	$('#errorpwd').addClass('hide');
+        $('#errorpwd').children('span').html('');
+        $('#correctpwd').removeClass('hide');
+        return true;
+    }
+}
+
+function CheckRepwd(obj) {
+    var v = obj.val();
+    var t = $("#pwd").val();
+    if (v.length <= 0) {
+    	$('#correctrepwd').addClass('hide');
+    	$('#errorrepwd').removeClass('hide');
+        $('#errorrepwd').children('span').html('请再次输入密码');
+        return false;
+    }else if (v != t) {
+    	$('#correctrepwd').addClass('hide');
+    	$('#errorrepwd').removeClass('hide');
+        $('#errorrepwd').children('span').html('两次密码不一致');
+        return false;
+    }else {
+    	$('#errorrepwd').addClass('hide');
+        $('#errorrepwd').children('span').html('');
+        $('#correctrepwd').removeClass('hide');
+        return true;
+    }
+}
+
+$(function(){		
+	$("#pwd").blur(function () { CheckPwd($(this)); });
+	$("#repwd").blur(function () { CheckRepwd($(this)); });
+	$('#page-form').submit(function(){
+		var pwd = $("#pwd");
+		var repwd = $("#repwd");
+    	if(CheckPwd(pwd) && CheckRepwd(repwd)){
+     		var pwd = pwd.val();              
+         	var repwd = repwd.val();
+        	$.post('index.php?s=user/resetpwd', {'password':pwd,'password2':repwd}, function(data){                      
+	       		if (data.status == 1) {
+	         		window.location.href = data.url;
+	            } else{
+	            	$('#error').removeClass('hide');
+	              	$('#error').html(data.content); 
+	         	}
+       		}, "json");
+         	return false;
+			}   
+		return false;
+      })
+});
+
+</script>
+<include file="Public:footer" />

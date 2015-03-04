@@ -1,0 +1,62 @@
+<extend name="Public/base"/>
+<block name="body">
+	<div class="main-title">
+		<h2>{$info['seq_id']?'编辑':'新增'}赠品顺序</h2>
+	</div>
+	<form action="{:U()}" method="post" class="form-horizontal">	
+		<div class="form-item">
+			<label class="item-label">赠送顺序<span class="check-tips"></span></label>
+			<div class="controls">
+				<input type="text" class="text input-middle" name="sequence" value="{$info.sequence|default=''}">	
+			</div>
+		</div>
+		<div class="form-item">
+			<label class="item-label">赠品名称<span class="check-tips"></span></label>
+			<div class="controls">
+				<select name="gift_id">
+					<volist name="giftList" id="vo">
+						<if condition="$vo['gift_id'] eq $info['gift_id']">
+							<option value="{$vo['gift_id']}" selected>{$vo['gift_name']}</option>
+						<else />
+							<option value="{$vo['gift_id']}">{$vo['gift_name']}</option>
+						</if>											
+					</volist>
+				</select>		
+			</div>
+		</div>
+		<div class="form-item">
+			<label class="item-label">周期时间(月)<span class="check-tips"></span></label>
+			<div class="controls">
+				<input type="text" class="text input-middle" name="cycle_time" value="{$info.cycle_time|default=''}">
+			</div>
+		</div>
+		<div class="form-item">
+			<label class="item-label">短信提前时间(月)<span class="check-tips"></span></label>
+			<div class="controls">
+				<input type="text" class="text input-middle" name="remind_time" value="{$info.remind_time|default=''}">
+			</div>
+		</div>
+		<div class="form-item">
+			<label class="item-label">领取提前时间(月)<span class="check-tips"></span></label>
+			<div class="controls">
+				<input type="text" class="text input-middle" name="preset_time" value="{$info.preset_time|default=''}">
+			</div>
+		</div>
+		<div class="form-item">
+			<input type="hidden" name="seq_id" value="{$info.seq_id|default=''}">
+			<if condition="$info['seq_id'] gt 0">
+				<input type="hidden" name="policy_id" value="{$info.policy_id|default=''}">
+			<else />
+				<input type="hidden" name="policy_id" value="{$policy_id|default=''}">
+			</if>			
+			<button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+			<button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+		</div>
+	</form>
+</block>
+<block name="script">
+	<script type="text/javascript">
+		//导航高亮
+		highlight_subnav('{:U('giftpolicy/index')}');
+	</script>
+</block>

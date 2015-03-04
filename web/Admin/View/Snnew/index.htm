@@ -1,0 +1,78 @@
+<extend name="Public/base" />
+<block name="body">
+	<div class="cf">
+		<div class="fl">           
+		  	<a class="btn" target="_blank" href="index.php?s=sn/index">生成SN码</a>
+        </div> 
+		<div class="search-form fr cf">
+			<div class="sleft">
+				<input type="text" name="code" class="search-input" value="{:I('code')}" placeholder="请输入SN码">
+				<a class="sch-btn" href="javascript:;" id="search" url="{:U('sn/index')}"><i class="btn-search"></i></a>
+			</div>
+		</div>
+	</div>
+    <div class="data-table table-striped">		
+		<table class="" style="min-width:910px;">
+			<thead>
+		        <tr>
+		       	 	<th class="" style="min-width:50px !important">编号</th>			
+					<th class="" style="min-width:50px !important">类型</th>
+					<th class="" style="min-width:50px !important">大小</th>
+					<th class="" style="min-width:50px !important">颜色</th>
+					<th class="" style="min-width:100px !important">SN码</th>
+					<th class="" style="min-width:50px !important">状态</th>
+					<th class="" style="min-width:120px !important">创建时间</th>
+					<th class="" style="min-width:120px !important">更新时间</th>
+					<th class="" style="min-width:70px !important">操作</th>
+				</tr>
+		    </thead>
+	    	<tbody>
+				<volist name="snList" id="vo">
+					<tr>
+						<td style="height:35px;">{$vo.id}</td>
+			            <td>{$vo.type}</td>
+			            <td>{$vo.size}</td>
+			            <td>{$vo.color}</td>
+			            <td>{$vo.value}</td>
+			            <td>{$vo.status}</td>
+			            <td>{$vo.createtime}</td>
+			            <td>{$vo.updatetime}</td>
+			           	<td>
+							<a title="编辑" href="{:U('edit?id='.$vo['id'])}">编辑</a>
+						</td>
+					</tr>													 
+				</volist>
+			</tbody>	    
+		</table>
+	</div>
+    <div class="page">
+        {$_page}
+    </div>
+</block>
+
+<block name="script">
+	<script type="text/javascript">
+	//搜索功能
+	$("#search").click(function(){
+		var url = $(this).attr('url');
+        var query  = $('.search-form').find('input').serialize();
+        query = query.replace(/(&|^)(\w*?\d*?\-*?_*?)*?=?((?=&)|(?=$))/g,'');
+        query = query.replace(/^&/g,'');
+        if( url.indexOf('?')>0 ){
+            url += '&' + query;
+        }else{
+            url += '?' + query;
+        }
+		window.location.href = url;
+	});
+	//回车搜索
+	$(".search-input").keyup(function(e){
+		if(e.keyCode === 13){
+			$("#search").click();
+			return false;
+		}
+	});
+	//导航高亮
+	highlight_subnav('{:U('snnew/index')}');
+	</script>
+</block>

@@ -1,0 +1,167 @@
+<include file="Public:header" />	
+<div class="contain" id="dialog-frame" style="margin-bottom:50px;">
+	<form id="page-form" action="index.php?s=order/checkout" method="post">
+		<div id="shopCartBox">
+			<div class="shop-cart-box">
+				<div class="shop-cart-box-bd">
+					<dl class="shop-cart-goods">
+						<dt class="clearfix">
+							<span class="col col-1">商品</span>
+							<span class="col col-2">单价</span>
+							<span class="col col-3">数量</span>
+							<span class="col col-4">小计</span>
+						</dt>
+						<dd class="item clearfix J_proItem">
+							<div class="item-row">
+								<div class="col col-1">
+									<div class="g-pic">
+										<a href="index.php?s=index" title="{$details['goods_name']}">
+											<img width="120" height="120" src="__IMG__/{$details['pic_url']}" alt="">
+										</a>
+									</div>
+									<div class="g-info">							
+										<div class="g-name">
+											<a href="index.php?s=index">
+											 {$details['goods_name']}
+											</a>
+										</div>										
+									</div>
+								</div>
+								<div class="col col-2" id="price">￥ {$details['goods_price']} </div>
+								<div class="col col-3">
+									<div class="change-goods-num clearfix J_changeGoodsNum">
+										<a class="J_minus" onClick="setAmount.reduce('#quantity')" href="javascript:void(0)">-</a>
+										<input class="goods-num" name="quantity" value="1" id="quantity" onKeyUp="setAmount.modify('#quantity')" type="text">
+										<a class="J_plus" onClick="setAmount.add('#quantity')" href="javascript:void(0)">+</a>
+									</div>
+								</div>
+								<div class="col col-4">
+									<em id="total_price"></em>
+									<p> </p>
+								</div>
+							</div>
+						</dd>
+					</dl>
+					<input type="hidden" value="{$details['goods_id']}" name="goods_id" /> 
+				</div>			
+			</div>
+		</div>
+		<div class="checkout-box">
+			<div class="xm-box">
+				<div class="box-hd ">
+					<h2 class="title">收件人姓名</h2>
+					<input name="receivename" id="receivename" class="input_kuang" type="text" >
+					<label class="error wred1 h22" style="width:350px;"><div class="nhide" id="errorname"><img style="top:0;" src="__IMG__/err.png"><span>请您输入收件人姓名</span></div></label> 
+				</div>				
+				<div class="box-hd ">
+					<h2 class="title">收件人手机号</h2>
+					<input name="mobile" id="mobile" class="input_kuang" type="text" >
+					<label class="error wred1 h22" style="width:350px;"><div class="nhide" id="errorphone"><img style="top:0;" src="__IMG__/err.png"><span>请您输入收件人手机号</span></div></label> 
+				</div>
+				<div class="box-hd ">
+					<h2 class="title">收件人地址</h2>
+					<input name="address" id="address" class="input_kuang" type="text" >
+					<label class="error wred1 h22" style="width:350px;"><div class="nhide" id="erroraddress"><img style="top:0;" src="__IMG__/err.png"><span>请您输入收件人地址</span></div></label> 
+				</div>
+				<div class="box-hd ">
+					<h2 class="title">优惠券（可选）</h2>
+					<input name="coupon" id="coupon" class="input_kuang" type="text" >
+					<label class="error wred1 h22" style="width:350px;"><div class="nhide" id="errorcoupon"><img style="top:0;" src="__IMG__/err.png"><span></span></div></label> 
+					<label class="error wred1 h22" style="width:350px;"><div class="nhide" id="rightcoupon"><span></span></div></label> 
+				</div>
+			</div>
+		</div>
+		<div class="shop-cart-action clearfix">
+			<button id="submit" type="submit" class="btn btn-primary btn-next">立即购买</button>
+		</div>
+	</form>	 
+</div>
+<script type="text/javascript">
+	function CheckMobile(obj){
+	    var v = obj.val().replace(/\s+/g, '');
+	    if (v.length <= 0) {
+	        $('#errorphone').removeClass('nhide');
+	        $('#errorphone').children('span').html('请您输入收件人手机号');
+	        return false;
+	    }
+	    if (/^(((\+86|86)?1[3|4|5|7|8][0-9]\d{8})|((\+\d{2})|(\d{2}))\d{11})$/.test(v)) {
+	        $('#errorphone').addClass('nhide');
+	        $('#errorphone').children('span').html('');
+	        return true;
+	    }
+	    else {
+	        $('#errorphone').removeClass('nhide');
+	        $('#errorphone').children('span').html('您输入的手机号格式有误');	        
+	        return false;
+	    }
+	}
+
+	function CheckName(obj){
+	    var v = obj.val().replace(/\s+/g, '');
+	    if (v.length <= 0) {
+	        $('#errorname').removeClass('nhide');
+	        return false;
+	    }else{
+	    	$('#errorname').addClass('nhide');
+	    	return true;
+	    }
+	}
+
+	function CheckAddress(obj){
+	    var v = obj.val().replace(/\s+/g, '');
+	    if (v.length <= 0) {
+	        $('#erroraddress').removeClass('nhide');
+	        return false;
+	    }else{
+	    	$('#erroraddress').addClass('nhide');
+	    	return true;
+	    }
+	}
+
+	function CheckCoupon(obj){
+	    var v = obj.val().replace(/\s+/g, '');
+	    $.post('index.php?s=order/checkCoupon', {'coupon':v}, function(data) {	    	
+            if (data.status == 1) {
+            	$('#errorcoupon').addClass('nhide');
+            	$('#rightcoupon').removeClass('nhide');
+            	$('#rightcoupon').children('span').html(data.info);
+            } 
+            else {
+            	$('#rightcoupon').addClass('nhide');
+            	$('#errorcoupon').removeClass('nhide');
+            	$('#errorcoupon').children('span').html(data.info);
+            }            
+        }, "json");	    
+	}
+
+    $(function () {
+        $("#receivename").blur(function () { CheckName($(this)); });
+        $("#mobile").blur(function () { CheckMobile($(this)); });
+        $("#address").blur(function () { CheckAddress($(this)); });
+        $("#coupon").blur(function () { CheckCoupon($(this)); });
+    
+		$("#page-form").submit(function () {
+			
+			var receivename = $("#receivename");
+			var mobile = $("#mobile");
+			var address = $("#address");
+
+            if (CheckName(receivename) && CheckMobile(mobile) && CheckAddress(address)) {             
+                var self = $(this);
+            	$.post(self.attr("action"), self.serialize(), success, "json");
+            }
+            return false;
+		});
+		function success(data) {
+            if (data.status == 1) {
+            	window.location.href = data.url;
+            }else {
+                $("#error").html(data.content);
+            }
+		}
+    })
+
+</script>
+<script type="text/javascript" src="__JS__/payfor.js"></script>
+<link rel="stylesheet" type="text/css" href="__CSS__/order.css" />
+<include file="Public:footer" />

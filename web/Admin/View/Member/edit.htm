@@ -1,0 +1,62 @@
+<extend name="Public/base"/>
+
+<block name="body">
+	<div class="main-title">
+		<h2>{$info['uid']?'编辑':'新增'}会员</h2>
+	</div>
+	<form action="{:U()}" method="post" class="form-horizontal">
+		<div class="form-item">
+			<label class="item-label">会员名</label>
+			<div class="controls">
+				<input type="text" class="text input-large" name="username" value="{$info.username|default=''}">
+			</div>
+		</div>
+		<div class="form-item">
+			<label class="item-label">会员手机号</label>
+			<div class="controls">
+				<input type="text" class="text input-large" name="mobile" value="{$info.mobile|default=''}">
+			</div>
+		</div>
+		<div class="form-item">
+			<label class="item-label">状态</label>
+			<div class="controls">
+				<select name="status">
+					<if condition="$info['status'] eq 0 "> 
+						<option value="0" selected>未验证</option>
+					<else /> 
+						<option value="0">未验证</option>
+					</if>				
+					<if condition="$info['status'] eq 1 "> 
+						<option value="1" selected>已验证</option>
+					<else /> 
+						<option value="1">已验证</option>
+					</if>
+				</select>
+			</div>
+		</div>
+		<div class="form-item">
+			<label class="item-label">注册时间<span class="check-tips"></span></label>
+			<div class="controls">
+				<input type="text" placeholder="注册时间" value="{$info.createtime|default=''}" class="text input-large" name="createtime">
+			</div>
+		</div>
+		<div class="form-item">
+			<label class="item-label">更新时间<span class="check-tips"></span></label>
+			<div class="controls">
+				<input type="text" placeholder="更新时间" value="{$info.updatetime|default=''}" class="text input-large" name="updatetime">
+			</div>
+		</div>
+		<div class="form-item">
+			<input type="hidden" name="uid" value="{$info.uid|default=''}">
+			<button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+			<button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+		</div>
+	</form>
+</block>
+
+<block name="script">
+	<script type="text/javascript">
+		//导航高亮
+		highlight_subnav('{:U('member/index')}');
+	</script>
+</block>

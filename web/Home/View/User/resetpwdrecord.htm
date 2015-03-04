@@ -1,0 +1,134 @@
+<include file="Public:header" />
+<link rel="stylesheet" type="text/css" href="__CSS__/register.css" />
+<div id="page" onclick="void(0)">
+    <div id="content">
+        <div id="dialog-frame-container">
+            <div id="dialog-frame" class="dialog-container">
+                <div>
+                    <div id="signupByEmail" class="auth-dialog-content" style="">
+                        <div class="dialog-title">
+                            <h2>重置密码</h2>
+                            <h4>请您输入新密码，完成重置密码工作</h4>
+                        </div>
+                        <div class="dialog-content">
+
+                            <form id="page-signup-form" action="index.php?s=user/resetpwdrecord" method="post">
+                               <input type="hidden" value="{$uid}" name="id" />     
+                                <div class="spacer"></div>
+                                <div class="input-container">
+                                    <label for="password">输入密码</label>
+                                    <input id="page_password" name="password" class="text entry " value="" autocomplete="off" type="password" />
+                                    <label class="error" id="passwordMsg"></label>
+                                </div>
+                                <div class="spacer"></div>
+                                <div class="input-container">
+                                    <label for="password">再一次输入密码</label>
+                                    <input id="page_password2" name="password2" class="text entry " value="" autocomplete="off" type="password" />
+                                    <label class="error" id="passwordMsg"></label>
+                                </div>
+                                <div class="spacer"></div>
+                                <div class="error-container" id="error">
+
+                                </div>
+                                <div class="spacer"></div>
+                                <button type="submit" id="submit-add-mobile-form" class="button orange">确认</button>
+                                <button type="button" class="button dialog-link" onclick="javascript:history.back(-1);">返回</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    //对于AJAX返回结果的处理
+    var rTime = 0;
+    var rUrl = '';
+    function StartTimer(t, url) {
+        rTime = t;
+        rUrl = url;
+        Timer();
+    }
+    function Timer() {
+        window.setTimeout('Timer()', 1000);
+        if (rTime <= 0) {
+            window.location.href = rUrl;
+        }
+        else {
+            rTime--;
+            $("#sTime").html(rTime);
+        }
+    }
+
+
+    function CheckPassword(obj) {
+        var v = obj.val();
+        if (v.length < 6) {
+            obj.focus();
+            ShowPWError('您输入的密码长度过短,必须大于6个字符');
+            return false;
+        }
+        else if (v.length > 20) {
+            ShowPWError('您输入的密码长度过长，请控制在20个字符以内');
+            obj.focus();
+            return false;
+        } else if (/[\'\"\\]/.test(v)) {
+            ShowPWError('您输入的密码包含非法字符,请重新设定');
+            obj.focus();
+            return false;
+        }
+        else {
+            ClearPWError(obj);
+            return true;
+        }
+    }
+
+
+    function ShowError(obj, text) {
+        obj.next(".error").html(text);
+    }
+    function ClearError(obj) {
+        obj.next(".error").html("");
+    }
+    function ShowPWError(text) {
+        $("#passwordMsg").html(text);
+    }
+    function ClearPWError() {
+        $("#passwordMsg").html("");
+    }
+
+    $(function () {
+        $("#page_password").blur(function () { CheckPassword($(this)); });
+        $("#page_password2").blur(function () { CheckPassword($(this)); });
+        $("#page-signup-form").submit(
+            function () {
+                var password = $("#page_password");
+                if (CheckPassword(password)) {
+                    var self = $(this);
+                    //alert(self.serialize());
+                    $.post(self.attr("action"), self.serialize(), success, "json");
+                }
+                return false;
+            }
+        );
+        function success(data) {
+            if (data.status == 1) {
+                var str = "<div style=' height:200px;display:table-cell; vertical-align:middle;'>" + data.content + "<br>页面将于<span  id='sTime' style='color:#28BCDC'></span>秒后自动跳转，您也可以直接<a class='spanSuccess'  href='" + data.url + "'>[点我]</a>完成页面跳转。</div>"
+                $("#dialog-frame").html(str);
+                StartTimer(5, data.url);
+            }
+            else if (data.status == -1) {
+                $("#error").html(data.content);
+            }
+            else {
+                $("#error").html(data.content);
+                StartTimer(3, data.url);
+            }
+        }
+    });
+
+
+</script>
+<include file="Public:footer" />

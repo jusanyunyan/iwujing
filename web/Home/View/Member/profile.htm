@@ -1,0 +1,425 @@
+<include file="Public:header" />
+<link rel="stylesheet" type="text/css" href="__CSS__/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="__CSS__/global.css" />
+<div class="main-nav">
+	<div class="col-xs-12">
+		<div class="container header-content-container">
+			<ul class="list-inline">
+				<li>
+					<a href="">首页</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="container content-container" style="min-height:600px;">
+	<!-- 导航区 -->
+	<div class="row">			
+		<div class="col-xs-3">
+			<div class="row">
+				<!-- <div class="col-xs-12"> -->
+					<ol class="breadcrumb">
+						<li>
+							<a href="index.php">首页</a>
+						</li>
+						<li>
+							<a href="index.php?s=member">个人中心</a>
+						</li>	
+					</ol>
+				<!-- </div> -->
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="panel-group " id="accordion">
+						<input type="hidden" id="m" value="">
+						<!-- 我的账户部分 -->
+						<div class="panel panel-default menu-group">
+							<div class="panel-heading">
+								<h5 class="panel-title">
+									<span class="glyphicon glyphicon-user"> </span>
+									我的账户
+								</h5>
+							</div>
+							<div id="collapseOne" class="panel-collapse collapse in">
+								<div class="panel-body">
+									<table class="table">
+										<tr id="profile" class="selected-menu">
+											<td>
+												<span class="glyphicon glyphicon-pencil text-success"></span>
+												<a href="index.php?s=member/profile">基本资料</a>
+											</td>
+										</tr>
+										<tr id="address">
+											<td>
+												<span class="glyphicon glyphicon-send text-success"></span>
+												<a href="index.php?s=member/address">收货地址</a>
+											</td>
+										</tr>
+										<tr id="idcard">
+											<td>
+												<span class="glyphicon glyphicon-picture text-success"></span>
+												<a href="index.php?s=member/idcard">身份信息</a>
+											</td>
+										</tr>
+										<tr id="securitycenter">
+											<td>
+												<span class="glyphicon glyphicon-screenshot text-success"></span>
+												<a href="index.php?s=member/securitycenter">安全中心</a>
+											</td>
+										</tr>
+										<tr id="change-user-password">
+											<td>
+												<span class="glyphicon glyphicon-lock text-success"></span>
+												<a href="index.php?s=member/securitycenter/prepareChangeLoginPassword">修改密码</a>
+											</td>
+										</tr>
+									</table>
+								</div>
+							</div>
+						</div>
+						<!-- 我的订单 -->
+						<div class="panel panel-default menu-group">
+							<div class="panel-heading">
+								<h5 class="panel-title">
+									<span class="glyphicon glyphicon-list"> </span>
+									我的订单
+								</h5>
+							</div>
+							<div id="collapseTwo" class="panel-collapse collapse in">
+								<div class="panel-body">
+									<table class="table">
+										<tr id="order">
+											<td>
+												<span class="glyphicon glyphicon-list-alt text-success"></span>
+												<a href="index.php?s=member/order">订单管理</a>
+											</td>
+										</tr>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-9">
+			<div class="title">基本资料</div>
+			<form class="form-horizontal profile-form" role="form" id="profile-form" action="user/profile/updateProfile" method="post">
+				<div>
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<input type="hidden" id="userId" name="secUserId" value="72">
+							<input type="hidden" id="prifileId" name="userProfileId" value="">
+							<div class="form-group">
+								<label class="col-xs-2 control-label">登陆名:</label>
+								<div class="col-xs-10">
+									<input type="text" class="form-control" id="username" name="username" readonly="readonly"
+										value="691723840@qq.com"
+									>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-2 control-label">姓名:</label>
+								<div class="col-xs-10">
+									<input type="text" class="form-control" id="nickname" name="nickname" placeholder="您的真实姓名"
+										value="691723840@qq.com"
+									>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-2 control-label">性别:</label>
+								<div class="col-xs-10">
+									<label class="radio-inline">
+										<input type="radio" id="sex" name="sex" value="1"
+											
+										> 男
+									</label>
+									<label class="radio-inline">
+										<input type="radio" id="sex" name="sex" value="0"
+											
+										> 女
+									</label>
+								</div>
+							</div>
+							<div class="form-group">
+								<input type="hidden" id="birthdayStr" value="">
+								<label class="col-xs-2 control-label">生日:</label>
+								<div class="col-xs-2">
+									<select class="form-control" id="startYear" name="startYear">
+										<option></option>
+									</select>
+								</div>
+								<div class="col-xs-1">
+									<span>年</span>
+								</div>
+								<div class="col-xs-2">
+									<select class="form-control" id="startMonth" name="startMonth">
+										<option></option>
+									</select>
+								</div>
+								<div class="col-xs-1">月</div>
+								<div class="col-xs-2">
+									<select class="form-control" id="startDay" name="startDay">
+										<option></option>
+									</select>
+								</div>
+								<div class="col-xs-1">日</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-2 control-label">手机号:</label>
+								
+								
+								<div class="col-xs-10">
+									<input type="text" class="form-control" id="mobile" name="mobile" placeholder="您手机号码"
+										value=""
+									>
+								</div>
+								
+							</div>
+							<div class="form-group">
+								<label class="col-xs-2 control-label">邮箱:</label>
+								<div class="col-xs-10">
+									<input type="email" class="form-control" id="email" name="email" placeholder="您的邮箱地址"
+										value=""
+									>
+								</div>
+							</div>
+							<div class="form-group">
+								<input type="hidden" id="uDistrictId" value="">
+								<input type="hidden" id="uCityId" value="">
+								<input type="hidden" id="uCountyId" value="">
+								<label class="col-xs-2 control-label">所在地:</label>
+								<div class="col-xs-2">
+									<select class="form-control" id="residenceDistrictId" name="residenceDistrictId">
+										
+										
+									</select>
+								</div>
+								<div class="col-xs-2">
+									<select class="form-control" id="residenceCityId" name="residenceCityId">
+										<option></option>
+									</select>
+								</div>
+								<div class="col-xs-2">
+									<select class="form-control" id="residenceCountyId" name="residenceCountyId">
+										<option></option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-xs-2 control-label">地址:</label>
+								<div class="col-xs-10">
+									<textarea class="form-control inputxt Validform_error" rows="2" id="detail-address"
+										name="detailAddress" datatype="*" sucmsg=" " nullmsg="请填写详细地址！"
+									></textarea>
+								</div>
+							</div>
+
+							<div class="text-muted">温馨提示：请填写有效邮箱地址，以便接收主题特卖的通知及订单信息，建议使用QQ、163等邮箱</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-2 col-xs-offset-5">
+					<button class="btn btn-block btn-public" type="submit">保存</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+(function(){
+	var m = $("#m").val();
+	target = "#"+m;
+	$(target).addClass("selected-menu");
+})();
+</script>
+<script type="text/javascript">
+(function() {
+/*$(".birthday").datetimepicker({
+	language: 'zh-CN',
+	weekStart: 1,
+	todayBtn: 1,
+	autoclose: 1,
+	todayHighlight: 0,
+	startView: 2,
+	minView: 2,
+	forceParse: 0,
+	format: 'yyyy年MM月dd日',
+	startDate: new Date('1950-01-01'),
+	showMeridian:true
+});*/
+// 生日选择
+function changeYear(str, isstart) {
+	var pre = "#start";
+	if (isstart == false) {
+		pre = "end";
+	}
+	// var startYear = $(pre + "Month")[0].value;
+	// if (startMonth == "") {
+	if (!str) {
+		var e = $(pre + "Month")[0];
+		optionClear(e);
+		var e2 = $(pre + "Day")[0];
+		optionClear(e2);
+		return;
+	}
+	if (startMonth.value) {
+		var n = MonHead[startMonth.value - 1];
+		if (startMonth.value == 2 && IsPinYear($(pre + "Year")[0].value)) {
+		n++;
+		}
+		writeDay(n, pre);
+	}
+}
+// 月份变化
+function changeMonth(str, isstart) {
+	var pre = "#start";
+	if (isstart == false) {
+		pre = "end";
+	}
+	var year = $(pre + "Year")[0].value;
+	if (!str || !year) {
+		var e = $(pre + "Day")[0];
+		optionClear(e);
+		return;
+	}
+	var n = MonHead[str - 1];
+	if (str == 2 && IsPinYear($(pre + "Year")[0].value)) {
+		n++;
+	}
+	writeDay(n, pre);
+}
+function dateStart() {
+	var defaultStartY = "1980";
+	var defaultStartM = "1";
+	var defaultStartD = "1";
+	MonHead = [ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
+	var prestr = new Array("start");
+	var pre = "#start";
+	var y = new Date().getFullYear();
+	var i_index = 0;
+	for (var i = (y - 64); i <= y; i++) {
+		$(pre + "Year")[0].options.add(new Option("" + i + "", i));
+		i_index++;
+	}
+	for (var i = 1; i < 13; i++) {
+		$(pre + "Month")[0].options.add(new Option("" + i + "", i));
+	}
+}
+function writeDay(n, pre) {
+	var e = $(pre + "Day")[0];
+	optionClear(e);
+	for (var i = 1; i < (n + 1); i++) {
+		e.options.add(new Option("" + i + "", i));
+	}
+}
+function IsPinYear(year) {
+	return (0 == year % 4 && (year % 100 != 0 || year % 4 == 0));
+}
+function optionClear(e) {
+	for (var i = e.options.length; i >= 0; i--) {
+		e.remove(i);
+	}
+}
+dateStart();
+	$("#startYear").change(function() {
+	changeYear($(this).val(), true);
+});
+$("#startMonth").change(function() {
+	changeMonth($(this).val(), true);
+});
+if($("#birthdayStr").val()){
+	var birthday = $("#birthdayStr").val();
+	var year = parseFloat(birthday.substring(0,4));
+	var month = parseFloat(birthday.substring(5,7));
+	var day = parseFloat(birthday.substring(8,10));
+	$("#startYear").val(year);
+	changeYear($("#startYear").val(), true);
+	$("#startMonth").val(month);
+	changeMonth($("#startMonth").val(), true);
+	$("#startDay").val(day);
+}
+/* 省市县选择及初始化 */
+$("#residenceDistrictId").change(function(){
+	var provinceId = $(this).val();
+	// 清空数据
+	$("#residenceCityId").find("option[value]").remove();
+	$("#residenceCountyId").find("option[value]").remove();
+	if(provinceId) {
+		initCity(provinceId);
+	}
+});
+$("#residenceCityId").change(function(){
+	var cityId = $(this).val();
+	// 清空数据
+	$("#residenceCountyId").find("option[value]").remove();
+	if(cityId) {
+		initCounty(cityId);
+	}
+});
+function initCity(districtId){
+	// 初始化市下拉字典(需要同步执行)
+	$.ajax({
+		type:"GET",
+		async:false,
+		url:"dd/getCityDd4District",
+		data:{districtId:districtId},
+		success:function(data){
+		if(data){
+		for(var i=0;i<data.length;i++){
+		var city = data[i];
+		$("#residenceCityId")[0].options.add(new Option(city.cnName,city.id));
+		}
+		}else {
+		return false;
+		}
+		}
+	});
+/*$.getJSON("dd/getCityDd4District",{districtId:districtId},function(data){
+if(data){
+for(var i=0;i<data.length;i++){
+var city = data[i];
+$("#cityId")[0].options.add(new Option(city.cnName,city.id));
+}
+}
+});*/
+}
+function initCounty(cityId){
+// 初始化市下拉字典(需要同步执行)
+	$.ajax({
+		type:"GET",
+		async:false,
+		url:"dd/getCountyDd4City",
+		data:{cityId:cityId},
+		success:function(data){
+			if(data){
+				for(var i=0;i<data.length;i++){
+					var county = data[i];
+					$("#residenceCountyId")[0].options.add(new Option(county.name,county.id));
+				}
+			}else {
+				return false;
+			}
+		}
+	});
+/*$.getJSON("dd/getCountyDd4City",{cityId:cityId},function(data){
+if(data){
+for(var i=0;i<data.length;i++){
+var county = data[i];
+$("#countyId")[0].options.add(new Option(county.name,county.id));
+}
+}
+});*/
+}
+if($("#uDistrictId").val()){
+	initCity($("#uDistrictId").val());
+}
+if($("#uCityId").val()){
+	initCounty($("#uCityId").val());
+}
+$("#residenceCityId").val($("#uCityId").val());
+$("#residenceCountyId").val($("#uCountyId").val());
+})();
+</script>
+<include file="Public:footer" />

@@ -1,0 +1,192 @@
+<include file="Public:header" />
+<link rel="stylesheet" type="text/css" href="__CSS__/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="__CSS__/global.css" />
+<div class="main-nav">
+	<div class="col-xs-12">
+		<div class="container header-content-container">
+			<ul class="list-inline">
+				<li>
+					<a href="">首页</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="container content-container" style="min-height:auto;">
+	<!-- 导航区 -->
+	<div class="row">			
+		<div class="col-xs-3">
+			<div class="row">
+				<!-- <div class="col-xs-12"> -->
+					<ol class="breadcrumb">
+						<li>
+							<a href="index.php">首页</a>
+						</li>
+						<li>
+							<a href="index.php?s=member">个人中心</a>
+						</li>
+						
+					</ol>
+				<!-- </div> -->
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="panel-group " id="accordion">
+						<input type="hidden" id="m" value="">
+						<!-- 我的账户部分 -->
+						<div class="panel panel-default menu-group">
+							<div class="panel-heading">
+								<h5 class="panel-title">
+									<span class="glyphicon glyphicon-user"> </span>
+									我的账户
+								</h5>
+							</div>
+							<div id="collapseOne" class="panel-collapse collapse in">
+								<div class="panel-body">
+									<table class="table">
+										<tr id="profile">
+											<td>
+												<span class="glyphicon glyphicon-pencil text-success"></span>
+												<a href="index.php?s=member/profile">基本资料</a>
+											</td>
+										</tr>
+										<tr id="address">
+											<td>
+												<span class="glyphicon glyphicon-send text-success"></span>
+												<a href="index.php?s=member/address">收货地址</a>
+											</td>
+										</tr>
+										<tr id="idcard">
+											<td>
+												<span class="glyphicon glyphicon-picture text-success"></span>
+												<a href="index.php?s=member/idcard">身份信息</a>
+											</td>
+										</tr>
+										<tr id="securitycenter">
+											<td>
+												<span class="glyphicon glyphicon-screenshot text-success"></span>
+												<a href="index.php?s=member/securitycenter">安全中心</a>
+											</td>
+										</tr>
+										<tr id="change-user-password">
+											<td>
+												<span class="glyphicon glyphicon-lock text-success"></span>
+												<a href="index.php?s=member/securitycenter/prepareChangeLoginPassword">修改密码</a>
+											</td>
+										</tr>
+									</table>
+								</div>
+							</div>
+						</div>
+						<!-- 我的订单 -->
+						<div class="panel panel-default menu-group">
+							<div class="panel-heading">
+								<h5 class="panel-title">
+									<span class="glyphicon glyphicon-list"> </span>
+									我的订单
+								</h5>
+							</div>
+							<div id="collapseTwo" class="panel-collapse collapse in">
+								<div class="panel-body">
+									<table class="table">
+										<tr id="order" class="selected-menu">
+											<td>
+												<span class="glyphicon glyphicon-list-alt text-success"></span>
+												<a href="index.php?s=member/order">订单管理</a>
+											</td>
+										</tr>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-9">
+			<div class="xm-line-box uc-box">
+				<div class="box-hd">
+					<h3 class="title">我的订单</h3>
+					<div class="more" style="display:none;">
+						<div class="uc-order-list-type">
+							<a class="current" href="">全部订单</a>
+							<span class="sep">|</span>
+							<a href="">未支付订单</a>
+							<span class="sep">|</span>
+							<a href="">已关闭订单</a>
+						</div>
+					</div>
+				</div>
+				<div class="box-bd">
+					<div class="uc-order-list-box">
+						<ul class="uc-order-detail-list">
+							<foreach name="order" item="vo" >
+							<li class="uc-order-detail-item">
+								<table class="order-detail-table">
+									<thead>
+										<tr>
+											<th class="column-info column-t" colspan="3">
+												<div class="column-content">
+													订单号：
+													<a href="">{$vo['order_no']}</a>
+													<span class="sep">|</span>
+													{$vo['receiver_name']}
+													<span class="sep">|</span>
+													{$vo['createtime']}
+												</div>
+											</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td class="column-detail column-l">
+												<ul class="order-goods-list">
+													<li class="first">
+														<a href="index.php?s=/car">
+															<img class="goods-thumb" alt=""  src="__IMG__/{$vo['pic_url']}">
+														</a>
+														<a class="goods-name" href="index.php?s=/car">{$vo['info']['goods_name']}</a>
+														<span class="goods-price">{$vo['info']['goods_price']}元</span>
+														<span class="goods-link"> </span>
+													</li>
+												</ul>
+											</td>
+											<td class="column-price">
+												<if condition="$vo['status'] egt 1">
+												<div class="order-info order-price">
+													{$vo['info']['total_price']}
+													<br>
+													支付成功
+												</div>
+												<else/>
+												<a href="index.php?s=order/payfor/id/{$vo['order_no']}">
+												<div class="order-info order-price">
+													{$vo['info']['total_price']}
+													<br>
+													立即支付
+												</div>
+												</a>
+												</if>
+											</td>
+											 
+											<td class="column-action column-r">
+												<div class="order-info order-action">
+													<a href="index.php?s=member/orderview/orderid/{$vo['order_no']}">
+														订单详情
+													</a>										
+												</div>
+											</td>
+											
+										</tr>
+									</tbody>
+								</table>
+							</li>
+							</foreach>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<include file="Public:footer" />

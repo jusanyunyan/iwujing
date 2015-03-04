@@ -1,0 +1,185 @@
+<include file="Public:header" />
+<link rel="stylesheet" type="text/css" href="__CSS__/register.css" />
+<div id="page" onclick="void(0)">
+    <div id="content">
+        <div id="dialog-frame-container" data-next="" data-referer="">
+            <div id="dialog-frame" class="dialog-container">
+                <div data-init="">
+					<div id="signupByEmail" class="auth-dialog-content" >
+                        <div class="dialog-title">
+                            <h2>验证手机号</h2>
+                        </div>
+                        <div class="dialog-content">
+							<p style="margin-bottom:20px;">我们需要验证您的手机号，以确保这是您本人在操作。</p>
+                             <form method="post" action="" name="signup" id="signup-form">
+								<label for="mobilephone">请您输入注册时填写的手机号</label>
+                                <span class="help">包含区号。非中国区域需要包含区号，区号格式：+86</span>
+                                <input type="hidden" value="" id="id"/>
+                                <input type="hidden" value="" id="vid"/>
+                            	<div class="clearfix">
+	                                <div style="margin-bottom:0" class="input-container">
+	                                    <!-- <label>手机号码</label> -->
+                                            <input type="text" maxlength="11" value="" class="text entry "  placeholder="输入手机号码"  id="mobilephone">
+	                                    <label class="error wred1 h22" style="width:350px;"><div class="nhide" id="errorphone"><img src="__IMG__/err.png"><span>您输入的手机格式有误，请检查</span></div></label>                                    
+	                                </div>
+	                                <div class="fl">
+		                                <!-- <label>&nbsp;</label> -->
+		                                <button class="blue" type="button" id="send_code">发送验证码</button>
+	                                </div>
+                                </div>
+                                <div class="spacer"></div>
+                                <div style="margin-bottom:0" class="input-container">
+
+                                    <label>手机验证码</label>
+                                    <input id="phone-number-input" name="code"  placeholder="举例： 123456" value="" type="tel" class="text entry " maxlength="6">
+                                    <label class="error wred1 h22" style="width:350px;"><div class="nhide" id="errorcode"><img src="__IMG__/err.png"><span>验证码为6位数字，请检查</span></div></label>
+                                </div>
+                                                                
+                                <div class="spacer"></div>
+                                
+                                
+                                <div class="error-container">
+
+                                </div>
+                                <div class="spacer"></div>
+                                
+                                <button class="orange" type="submit">下一步</button>
+                                
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+ 
+    function CheckMobile(obj){
+        var v = obj.val().replace(/\s+/g, '');
+        if (v.length <= 0) {
+            $('#errorphone').removeClass('nhide');
+            $('#errorphone').children('span').html('请您输入手机号之后再进行验证');
+            //obj.focus();
+            return false;
+        }
+        if (/^(((\+86|86)?1[3|4|5|7|8][0-9]\d{8})|((\+\d{2})|(\d{2}))\d{11})$/.test(v)) {
+            $('#errorphone').addClass('nhide');
+            $('#errorphone').children('span').html('');
+            return true;
+        }
+        else {
+            $('#errorphone').removeClass('nhide');
+            $('#errorphone').children('span').html('您输入的手机号格式有误');
+            
+            //obj.focus();
+            return false;
+        }
+    }
+    var STime = '60';//这个变量是倒计时的秒数设置为10就是10秒
+    function TimeClose(STime) {
+        
+        
+        if (STime <= 1)//判断秒数如果为0
+        {
+            
+            $("#send_code").removeAttr("disabled");
+            $('#send_code').addClass('blue');
+            $('#send_code').html('重新发送验证码');
+            
+        }
+        else {
+            
+            STime--;//减少秒数
+            window.setTimeout('TimeClose('+STime--+')', 1000);//让程序每秒重复执行当前函数。
+            $("#send_code").attr("disabled", "disabled");
+            $("#send_code").removeClass('blue');
+            $("#send_code").html(STime+'秒后点击重新获取验证码');
+        }
+    }
+    //验证码
+    function CheckCode(obj){
+        var v = obj.val();
+        if (v.length <= 0) {
+            $('#errorcode').removeClass('nhide');
+            $('#errorcode').children('span').html('请您输入手机号收到的验证码');
+            //obj.focus();
+            return false;
+        }
+        if (/^\d{6}$/.test(v)) {
+            $('#errorcode').addClass('nhide');
+            $('#errorcode').children('span').html('');
+            return true;
+        }
+        else {
+            $('#errorcode').removeClass('nhide');
+            $('#errorcode').children('span').html('验证码为6位数字，请检查');
+            
+            //obj.focus();
+            return false;
+        }
+    }
+    $(function(){
+        $("#mobilephone").blur(function(){CheckMobile($(this)); });
+        $("#phone-number-input").blur(function () { CheckCode($(this)); });
+        
+        $('#send_code').click(function(){
+        var obj = $("#mobilephone");
+        if (CheckMobile(obj)) {               
+          	var text = obj.val().replace(/\s+/g, '');
+                $.post('index.php?s=user/checkmobile', {'mobile':text}, function(data){
+                    if (data.status) {
+                        TimeClose(61);
+                        $('#errorphone').addClass('nhide');
+                        
+                        $("#id").val(data.id);
+                        $("#vid").val(data.vid);
+                        
+                    } else {
+                        $('#errorphone').removeClass('nhide');
+                        $("#errorphone").children('span').html(data.info);
+                    }
+                }, "json");
+            }else{
+                 $("#send_code").removeAttr("disabled");
+            }
+            return false;
+        })
+        
+        
+        $('#signup-form').submit(function(){
+            var phone_input = $('#phone-number-input');
+            var mobilephone = $('#mobilephone');
+            if(phone_input && mobilephone){
+                CheckMobile(mobilephone);
+                CheckCode(phone_input);
+                var text1 = mobilephone.val();
+                
+                var code = phone_input.val();
+                var id = $('#id').val();
+                var vid = $('#vid').val();
+				if(id=='' || vid==''){
+					$('#errorcode').removeClass('nhide');
+					$('#errorcode').children('span').html('请先获取验证码');
+					return false;
+				}
+                    $.post('index.php?s=user/verifyresetpwdmobile', {'code':code,'mobile':text1,'id':id,'vid':vid}, function(data){
+                        
+                        if (data.status == 1) {
+                            
+                            window.location.href = data.url;
+                           
+                        } else{
+                            $('#errorcode').removeClass('nhide');
+                            $('#errorcode').children('span').html(data.content); 
+                        }
+                    }, "json");
+                return false;
+            }
+            
+            return false;
+        })
+    })
+
+</script>
+<include file="Public:footer" />

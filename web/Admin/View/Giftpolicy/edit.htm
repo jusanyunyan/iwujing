@@ -1,0 +1,81 @@
+<extend name="Public/base"/>
+<block name="body">
+	<div class="main-title">
+		<h2>{$info['policy_id']?'编辑':'新增'}赠品策略</h2>
+	</div>
+	<form action="{:U()}" method="post" class="form-horizontal">	
+		<div class="form-item">
+			<label class="item-label">策略名称<span class="check-tips"></span></label>
+			<div class="controls">
+				<input type="text" class="text input-middle" name="policy_name" value="{$info.policy_name|default=''}">
+			</div>
+		</div>
+		<div class="form-item">
+			<label class="item-label">机型名称<span class="check-tips"></span></label>
+			<div class="controls">
+				<select name="goods_id">
+					<volist name="goodsList" id="vo">
+						<if condition="$vo['goods_id'] eq $info['goods_id']">
+							<option value="{$vo['goods_id']}" selected>{$vo['goods_name']}</option>
+						<else />
+							<option value="{$vo['goods_id']}">{$vo['goods_name']}</option>
+						</if>											
+					</volist>
+				</select>		
+			</div>
+		</div>
+		<div class="form-item">
+			<label class="item-label">有效期限(月)<span class="check-tips"></span></label>
+			<div class="controls">
+				<input type="text" class="text input-middle" name="total_time" value="{$info.total_time|default=''}">
+			</div>
+		</div>
+		<div class="form-item">
+			<label class="item-label">状态</label>
+			<div class="controls">
+				<select name="status">	
+					<if condition="$info['status'] eq 0 "> 
+						<option value="0" selected>不可用</option>
+					<else /> 
+						<option value="0">不可用</option>
+					</if>				
+					<if condition="$info['status'] eq 1 "> 
+						<option value="1" selected>可用</option>
+					<else /> 
+						<option value="1">可用</option>
+					</if>
+				</select>
+			</div>
+		</div>
+		<div class="form-item">
+			<label class="item-label">默认项</label>
+			<div class="controls">
+				<select name="default">	
+					<if condition="$info['default'] eq 0 "> 
+						<option value="0" selected>否</option>
+					<else /> 
+						<option value="0">否</option>
+					</if>				
+					<if condition="$info['default'] eq 1 "> 
+						<option value="1" selected>是</option>
+					<else /> 
+						<option value="1">是</option>
+					</if>
+				</select>
+			</div>
+		</div>
+		<div class="form-item">
+			<input type="hidden" name="policy_id" value="{$info.policy_id|default=''}">
+			<input type="hidden" name="createtime" value="{$info.createtime|default=''}">
+			<input type="hidden" name="updatetime" value="{$info.updatetime|default=''}">
+			<button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+			<button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+		</div>
+	</form>
+</block>
+<block name="script">
+	<script type="text/javascript">
+		//导航高亮
+		highlight_subnav('{:U('giftpolicy/index')}');
+	</script>
+</block>

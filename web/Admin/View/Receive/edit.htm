@@ -1,0 +1,112 @@
+<extend name="Public/base"/>
+<block name="body">
+	<div class="main-title">
+		<h2>编辑SN码领取列表</h2>
+	</div>
+	<form action="{:U()}" method="post" class="form-horizontal">
+		<div class="form-item">
+			<label class="item-label">收件人姓名</label>
+			<div class="controls">
+				<input type="text" class="text input-large" name="username" value="{$info.username|default=''}">
+			</div>
+		</div>
+		<div class="form-item">
+			<label class="item-label">收件人手机号</label>
+			<div class="controls">
+				<input type="text" class="text input-large" name="mobile" value="{$info.mobile|default=''}">
+			</div>
+		</div>
+		<div class="form-item">
+			<label class="item-label">收件人邮箱</label>
+			<div class="controls">
+				<input type="text" class="text input-large" name="email" value="{$info.email|default=''}">
+			</div>
+		</div>
+		<div class="form-item">
+			<label class="item-label">收件人地址</label>
+			<div class="controls">
+				<if condition="($info.province gt 0) and ($info.city gt 0) and ($info.zone gt 0)">
+				<select name='province' id="province">
+	                <option value='0'>选择省份</option>
+	                <foreach name='provinces' item='v'>	  
+	                 	<if condition="$v['id'] eq $info['province']">
+                               <option value="{$v['id']}" selected >{$v['name']}</option>
+                          	<else/>
+                               <option value="{$v['id']}">{$v['name']}</option>
+                           </if>		                		                		                   
+	                </foreach>
+	            </select>
+	       		<select name='city' id='city'>
+	                <option value='0' >选择城市</option>
+	                <foreach name='citys' item='v'>	                    
+	                 	<if condition="$v['id'] eq $info['city']">
+                               <option value="{$v['id']}" selected >{$v['name']}</option>
+                          	<else/>
+                               <option value="{$v['id']}">{$v['name']}</option>
+                           </if>
+	                </foreach>
+	            </select>
+	            <select name='zone' id='zone'>
+	                <option value='0'>选择区县</option>
+	                <foreach name='zones' item='v'>
+	               		<if condition="$v['id'] eq $info['zone']">
+                               <option value="{$v['id']}" selected >{$v['name']}</option>
+                          	<else/>
+                               <option value="{$v['id']}">{$v['name']}</option>
+                           </if>
+	                </foreach>
+	            </select>
+	            </if>
+				<input type="text" class="text input-large" name="address" value="{$info.address|default=0}">
+			</div>
+		</div>
+		<div class="form-item">
+			<label class="item-label">状态</label>
+			<div class="controls">
+				<select name="status">					
+					<if condition="$info['status'] eq 0 "> 
+						<option value="0" selected>未发货</option>
+					<else /> 
+						<option value="0">未发货</option>
+					</if>				
+					<if condition="$info['status'] eq 1 "> 
+						<option value="1" selected>已发货</option>
+					<else /> 
+						<option value="1">已发货</option>
+					</if>
+				</select>
+			</div>
+		</div>
+		<div class="form-item">
+			<label class="item-label">物流公司</label>
+			<div class="controls">
+				<input type="text" class="text input-large" name="ship_name" value="{$info.ship_name|default=''}" >
+			</div>
+		</div>
+		<div class="form-item">
+			<label class="item-label">快递单号</label>
+			<div class="controls">
+				<input type="text" class="text input-large" name="ship_no" value="{$info.ship_no|default=''}" >
+			</div>
+		</div>
+		<div class="form-item">
+			<label class="item-label">备注<span class="check-tips"></span></label>
+			<div class="controls">
+				<input type="text" class="text input-large" name="remark" value="{$info.remark|default=''}" >
+			</div>
+		</div>
+		<div class="form-item">
+			<input type="hidden" name="receive_id" value="{$info.receive_id|default=''}">
+			<input type="hidden" name="createtime" value="{$info.createtime|default=''}">
+			<button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+			<button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+		</div>
+	</form>
+</block>
+
+<block name="script">
+	<script type="text/javascript">
+		//导航高亮
+		highlight_subnav('{:U('receive/index')}');
+	</script>
+</block>

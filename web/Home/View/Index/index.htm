@@ -1,0 +1,192 @@
+	<include file="Public:header" />			
+	<div class="sub-menu-container">
+		<div class="container">
+			<nav class="menu sub-menu">
+				<ul class="nav" id="nav1">
+					<li>
+						<a id="item">
+							<span class="item">产品</span>
+							<span class="icon" id="icon"></span>
+						</a>						
+					</li>
+					<li>
+						<a href="#function">
+							<span class="item">功能</span>
+						</a>
+					</li>
+					<li>
+						<a href="#appearance">
+							<span class="item">外观</span>
+						</a>
+					</li>
+					<li>
+						<a href="#operation">
+							<span class="item">操作</span>
+						</a>						
+					</li>
+					<if condition="$session['is_login'] eq 1">
+					<li style="float:right;width:5%;">
+						<a onclick="logout()" href="javascript:void(0);" rel="nofollow" >
+							<span class="item">退出</span>
+						</a>
+					</li>
+					<li style="float:right;width:15%;">
+						<a id="name">
+							<span class="item">{$session['username']}</span>
+							<span class="icon" id="icon2"></span>
+						</a>
+					</li>
+					<else />					
+					<li style="float:right;width:13%;">
+						<a id="login">
+							<span class="item">登录</span>							
+							<span class="icon" id="icon3"></span>
+						</a>
+					</li>
+					</if>					
+				</ul>				
+				<ul class="nav" id="nav2" style="display:none;">
+					<li>				
+						<div style="margin-top:10px;width:120px;height:60px;">
+							<img width="100px" src="__IMG__/jing-logo.png"/>
+						</div>		
+					</li>			
+					<li>
+						<a>
+							<span class="item">概览</span>
+						</a>
+					</li>
+					<li>
+						<a href="#function">
+							<span class="item"receive>功能</span>
+						</a>
+					</li>
+					<li>
+						<a href="#appearance">
+							<span class="item">外观</span>
+						</a>
+					</li>
+					<li>
+						<a href="#operation">
+							<span class="item">操作</span>
+						</a>
+					</li>
+					<li>
+					 	<div id="buy2" class="btn" style="margin-top:12px;positon:absolute;margin-right:-400px;border-radius:20px;">立即购买</div>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+	<include file="Public:purchase" />	
+	<div class="content-intro">
+		<div class="section section-04">
+			<div class="section-content" style="background:url(__IMG__/wujing/first.png) no-repeat scroll center top;height:760px;"></div>			
+			<div class="wapper">
+				<div id="receive" class="btn" style="float:right;margin-top:-750px;positon:absolute;margin-right:10px;background-color:#85b838; border: 1px solid #85b838;border-radius:20px;">
+					领取洗护套装
+				</div>
+				<div id="buy" class="btn" style="float:left;margin-top:-180px;positon:absolute;margin-left:420px;background-color:#20BCF9; border: 1px solid #20BCF9;border-radius:20px;">
+					立即购买
+				</div>
+			</div>
+		</div>
+		<div class="section section-04">
+			<div class="section-content" style="background:url(__IMG__/wujing/second1.png) no-repeat scroll center top;">
+				<div class="wapper">
+					<div style="height:67px;width:544px;float:left;margin-left:50%;margin-top:260px;background-image:url(__IMG__/wujing/second2.png);"></div>
+					<div style="width:544px;float:left;margin-left:50%;margin-top:20px;font-size:1.2em;line-height:30px;color:#666666;">航天迅驰独家专利技术，通过在孔道内加载电场，使通过孔道内的颗粒物带异级性电荷，凝并成大颗粒，反复多次凝并后，被驻电的滤网内壁吸附，并固化！<br>去除雾霾，杀菌灭毒，守护室内呼吸健康。</div>
+				</div>
+			</div>	
+		</div>
+		<div class="section section-04">
+			<div class="section-content" style="background:url(__IMG__/wujing/third1.png) no-repeat scroll center top;">
+				<div class="wapper">
+					<div style="height:65px;width:272px;float:right;margin-right:65%;margin-top:260px;background-image:url(__IMG__/wujing/third2.png);"></div>
+					<div style="width:272px;float:right;margin-right:65%;margin-top:20px;font-size:1.2em;line-height:30px;color:#666666;">&nbsp;&nbsp;&nbsp;&nbsp;PM2.5滤网可水洗，持续使用<br>赠送处甲醛滤网，可根据需要使用</div>
+					<div style="height:104px;width:516px;float:right;margin-right:53%;margin-top:20px;background-image:url(__IMG__/wujing/third3.png);"></div>
+				</div>
+			</div>
+		</div>
+		<div class="section section-04">
+			<div class="section-content" style="background:url(__IMG__/wujing/fourth1.png) no-repeat scroll center top;">			
+				<div class="wapper">
+					<div style="height:227px;width:382px;float:left;margin-left:65%;margin-top:240px;background-image:url(__IMG__/wujing/fourth2.png);"></div>
+					<div style="width:544px;float:left;margin-left:70%;margin-top:-160px;font-size:1.2em;line-height:30px;color:#666666;">CARD达300m&sup3/h &nbsp;&nbsp;&nbsp;&nbsp;消除室内雾霾困扰</div>
+					<div style="width:544px;float:left;margin-left:68%;margin-top:10px;font-size:1.2em;line-height:30px;color:#666666;">99%杀菌率，1小时细菌病毒杀灭率达99%<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;防流感、病毒，消除室内交叉感染</div>
+				</div>
+			</div>
+		</div>
+		<div class="section section-04">
+			<div class="section-content" style="background:url(__IMG__/wujing/fifth1.png) no-repeat scroll center top;">				
+				<div class="wapper">
+					<div style="height:82px;width:471px;float:right;margin-right:55%;margin-top:200px;background-image:url(__IMG__/wujing/fifth2.png);"></div>
+					<div style="width:340px;float:right;margin-right:65%;font-size:1.2em;line-height:30px;color:#666666;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注：CARD(洁净空气输出率)<br><br>每小时将34至40平米房间的空气净化3次以上<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;持续净化，保持室内空气洁净</div>
+				</div>
+			</div>
+		</div>
+		<div class="section section-04">
+			<div class="section-content" style="background:url(__IMG__/wujing/sixth1.png) no-repeat scroll center top;">
+				<div class="wapper">
+					<div style="height:181px;width:280px;float:left;margin-left:65%;margin-top:150px;background-image:url(__IMG__/wujing/sixth2.png);"></div>
+					<div style="width:544px;float:left;margin-left:62%;margin-top:10px;font-size:1.2em;line-height:30px;color:#666666;">一级节能！能效比16.5立方米每瓦，超国际6倍<br>&nbsp;&nbsp;&nbsp;&nbsp;最高功率仅20W，1度电可持续使用50小时</div>
+				</div>
+			</div>			
+		</div>
+		<div class="section section-04">
+			<div class="section-content" style="background:url(__IMG__/wujing/seventh1.png) no-repeat scroll center top;">
+				<div class="wapper">
+					<div style="height:179px;width:507px;float:right;margin-right:57%;margin-top:250px;background-image:url(__IMG__/wujing/seventh2.png);"></div>
+					<div style="width:340px;float:right;margin-right:65%;margin-top:30px;font-size:1.2em;line-height:30px;color:#666666;">独特结构设计，快速循环、过滤室内空气<br>独家外观专利，占地面积仅一张A4纸大小</div>
+				</div>
+			</div>	
+		</div>
+		<div class="section section-04">
+			<div class="section-content" style="background:url(__IMG__/wujing/eighth1.png) no-repeat scroll center top;">
+				<div class="wapper">
+					<div style="height:261px;width:349px;float:left;margin-left:60%;margin-top:220px;background-image:url(__IMG__/wujing/eighth2.png);"></div>
+					<div style="width:270px;float:left;margin-left:65%;margin-top:-170px;font-size:1.2em;line-height:30px;color:#666666;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;三档风量，轻松切换<br>光感灯带，自动调节，睡眠无忧</div>
+					<div style="width:100px;float:left;margin-left:62.5%;margin-top:-35px;font-size:14px;line-height:30px;color:#666666;">睡眠模式 </div>
+					<div style="width:100px;float:left;margin-left:74.5%;margin-top:-35px;font-size:14px;line-height:30px;color:#666666;">高速模式</div>
+					<div style="width:100px;float:left;margin-left:87%;margin-top:-35px;font-size:14px;line-height:30px;color:#666666;">强效模式</div>
+				</div>
+			</div>
+		</div>
+		<div class="section section-04">
+			<div class="section-content" style="background:url(__IMG__/wujing/ninth1.png) no-repeat scroll center top;height:550px;">
+				<div class="wapper">
+					<div style="height:70px;width:254px;float:left;margin-left:60%;margin-top:200px;background-image:url(__IMG__/wujing/ninth2.png);"></div>
+					<div style="width:200px;float:left;margin-left:65%;margin-top:20px;font-size:1.2em;line-height:30px;color:#666666;">用水清洗后持续有效 </div>
+					<div style="width:600px;float:left;margin-left:45%;font-size:1.2em;line-height:30px;color:#666666;">&nbsp;&nbsp;&nbsp;&nbsp;强效去除PM2.5、0.1微米以上颗粒物，杀灭细菌病毒、清除二手烟<br>每个HAT滤网含5450个净化单元，容尘量为同体积HEPA滤网的3倍以上 </div>
+				</div>
+			</div>
+		</div>
+		<div class="section section-04">
+			<div class="section-content" style="background:url(__IMG__/wujing/tenth1.png) no-repeat scroll center top;height:550px;">
+				<div class="wapper">
+					<div style="height:75px;width:243px;float:right;margin-right:57%;margin-top:200px;background-image:url(__IMG__/wujing/tenth2.png);"></div>
+					<div style="width:500px;float:right;margin-right:40%;margin-top:20px;font-size:1.2em;line-height:30px;color:#666666;">强效滤除甲醛等挥发性有机物气体（TVOC）、以及室内异味</div>
+					<div style="width:500px;float:right;margin-right:36%;font-size:1.2em;line-height:30px;color:#666666;">1小时甲醛去除率达84%,2小时甲醛去除率达92%</div>
+					<div style="width:500px;float:right;margin-right:40%;font-size:1.2em;line-height:30px;color:#666666;">(使用有效期为一年，适合装修家庭使用，有效去除装修污染)</div>
+				</div>
+			</div>
+		</div>
+		<div class="section section-04">
+			<div class="section-content" style="background:url(__IMG__/wujing/eleventh1.png) no-repeat scroll center top;height:700px;">
+				<div class="wapper">
+					<div style="height:67px;width:411px;float:right;margin-right:32%;margin-top:50px;background-image:url(__IMG__/wujing/eleventh2.png);"></div>
+					<div style="width:250px;float:right;margin-right:38%;margin-top:240px;font-size:26px;line-height:30px;color:#ff4a00;">CARD值335M&sup3/h</div>
+					<div style="width:250px;float:right;margin-right:38%;margin-top:150px;font-size:26px;line-height:30px;color:#ff4a00;">除菌率大于99%</div>
+				</div>
+			</div>
+		</div>
+		<div id="section section-04" style="margin:50px 0 50px 0;"> 
+			<div class="l-banner" style="width:1024px;height:576px;">   
+				<embed src="http://yuntv.letv.com/bcloud.swf" allowFullScreen="true" quality="high"  width="1024" height="576" align="middle" allowScriptAccess="always" flashvars="uu=4894f080fd&vu=a67c8979fd&auto_play=1&gpcflag=1&width=1024&height=576" type="application/x-shockwave-flash"></embed>
+			</div>  	
+    	</div>
+	</div>
+
+<include file="Public:footer" />
+	
+	

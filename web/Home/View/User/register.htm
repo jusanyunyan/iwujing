@@ -1,0 +1,212 @@
+<include file="Public:header" />
+<link rel="stylesheet" type="text/css" href="__CSS__/register.css" />
+<div id="page" onclick="void(0)">
+    <div id="content" >
+        <div id="dialog-frame-container">
+            <div id="dialog-frame" class="dialog-container">
+                <div>   
+                    <div id="signupByEmail" class="auth-dialog-content" >
+                        <div class="dialog-title">
+                            <h2>免费注册</h2>
+                        </div>
+                        <div class="dialog-content">
+                             <form method="post" action="" name="signup" id="signup-form">
+                            	<div class="clearfix">
+	                                <div style="margin-bottom:0" class="input-container">
+	                                    <label>手机号码</label>
+                                     	<input type="text" maxlength="11" value="" class="text entry "  placeholder="输入手机号码"  id="mobilephone">
+	                                    <label class="error wred1 h22" style="width:350px;">
+	                                    	<div class="nhide" id="errorphone">
+	                                    		<img src="__IMG__/err.png">
+	                                    		<span>您输入的手机格式有误，请检查</span>
+	                                    	</div>
+	                                    </label>                                    
+	                                </div>	                                
+                                </div>
+                                <div class="spacer"></div>                                  
+                               	<div style="margin-bottom:0" class="input-container">
+                                	<label>动态验证码</label>
+                                	<input type="text" name="verify" id='verify' placeholder="请填写验证码" autocomplete="off">                           	
+	                                <img class="verifyimg reloadverify" width="150px;" alt="点击切换" src="{:U('User/verify')}">
+	                                <a class="reloadverify" title="换一张" href="javascript:void(0)">换一张？</a>  
+                                </div>   
+                                
+                            	<div class="spacer"></div>
+                            	<label class="error wred1 h22" style="width:350px;">
+                                	<div class="nhide" id="errorverify">
+                                		<img src="__IMG__/err.png"/>
+                                		<span></span>
+                                	</div>
+                                </label>                                 
+                                <div style="margin-bottom:0" class="input-container">
+                                    <label>手机验证码</label>
+                                    <input id="phone-number-input" name="code"  placeholder="请输入手机收到的六位验证码" value="" type="tel" class="text entry " maxlength="6">
+                                    <label class="error wred1 h22" style="width:350px;">
+                                    	<div class="nhide" id="errorcode">
+                                    		<img src="__IMG__/err.png"/>
+                                    		<span>验证码为6位数字，请检查</span>
+                                    	</div>
+                                    </label>
+                                </div>
+                                <div class="fl">
+	                                <label>&nbsp;</label>
+	                                <button class="blue" type="button" id="send_code">获取验证码</button>
+                                </div> 
+                             	<div class="spacer"></div>             
+                                <button class="orange" type="submit">下一步</button>                                                             
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+	function CheckMobile(obj){
+        var v = obj.val().replace(/\s+/g, '');
+        if (v.length <= 0) {
+            $('#errorphone').removeClass('nhide');
+            $('#errorphone').children('span').html('请您输入手机号之后再进行验证');
+            return false;
+        }
+        if (/^(((\+86|86)?1[3|4|5|7|8][0-9]\d{8})|((\+\d{2})|(\d{2}))\d{11})$/.test(v)) {
+            $('#errorphone').addClass('nhide');
+            $('#errorphone').children('span').html('');
+            return true;
+        }else {
+            $('#errorphone').removeClass('nhide');
+            $('#errorphone').children('span').html('您输入的手机号格式有误');            
+            return false;
+        }
+    }
+    var STime = '60';//这个变量是倒计时的秒数设置为10就是10秒
+    function TimeClose(STime) {  
+        if (STime <= 1)//判断秒数如果为0
+        {           
+            $("#send_code").removeAttr("disabled");
+			$('#send_code').addClass('blue');
+            $('#send_code').html('重新发送验证码');           
+        }
+        else {            
+            STime--;//减少秒数
+            window.setTimeout('TimeClose('+STime--+')', 1000);//让程序每秒重复执行当前函数。
+            $("#send_code").attr("disabled", "disabled");
+			$("#send_code").removeClass('blue');
+            $("#send_code").html(STime+'秒后点击重新获取验证码');
+        }
+    }
+    //验证码
+    function CheckCode(obj){
+        var v = obj.val();
+        if (v.length <= 0) {
+            $('#errorcode').removeClass('nhide');
+            $('#errorcode').children('span').html('请您输入手机号收到的验证码');
+            return false;
+        }
+        if (/^\d{6}$/.test(v)) {
+            $('#errorcode').addClass('nhide');
+            $('#errorcode').children('span').html('');
+            return true;
+        }
+        else {
+            $('#errorcode').removeClass('nhide');
+            $('#errorcode').children('span').html('验证码为6位数字，请检查！');
+            return false;
+        }
+    }
+
+    function CheckVerify(obj){
+        var v = obj.val();
+        if (v.length <= 0) {
+            $('#errorverify').removeClass('nhide');
+            $('#errorverify').children('span').html('请您输入图形中的验证码！');
+            return false;
+        }else{
+        	$('#errorverify').addClass('nhide');
+        	return true;
+        }
+    }
+
+    $(function(){
+        $("#mobilephone").blur(function(){CheckMobile($(this)); });
+        $("#phone-number-input").blur(function () { CheckCode($(this)); });
+        $("#verify").blur(function () { CheckVerify($(this)); });
+        
+        $('#send_code').click(function(){ 
+	        var obj = $("#mobilephone");
+	        var verify = $('#verify');
+
+			if (CheckMobile(obj) && CheckVerify(verify)){        
+	         	var text = obj.val().replace(/\s+/g, '');	
+	         	var vefifycode = verify.val().replace(/\s+/g, '');			
+	           	$.post('index.php?s=user/register', {'mobile':text,'verify':vefifycode}, function(data){
+	           		if(data.status == 1){
+	                	TimeClose(61); 
+	                  	$('#errorphone').addClass('nhide');  
+	                  	$('#errorverify').addClass('nhide'); 
+	                  	//$("#verify").val(verifycode);              
+	              	}else if(data.status == 0){
+                        $('#errorverify').removeClass('nhide');
+                        $('#errorverify').children('span').html(data.info);
+        				//刷新验证码
+                     	$("#verify").val('');
+        				$(".reloadverify").click();
+                    }else if(data.status == -1){
+                    	$('#errorphone').removeClass('nhide');
+	                 	$("#errorphone").children('span').html(data.info);
+        				//刷新验证码
+                     	$("#verify").val('');
+        				$(".reloadverify").click();
+                    }
+	       		}, "json");
+			}else{
+	         	$("#send_code").removeAttr("disabled");
+	     	}
+	  		return false;
+        })
+        
+        
+        $('#signup-form').submit(function(){
+            var phone_input = $('#phone-number-input');
+            var mobilephone = $('#mobilephone');
+            
+            if(phone_input && mobilephone){
+                CheckMobile(mobilephone);
+                CheckCode(phone_input);
+                var text1 = mobilephone.val();              
+                var code = phone_input.val();
+               
+                    $.post('index.php?s=user/checkmobilenew', {'code':code,'mobile':text1}, function(data){
+                        if (data.status == 1) {                           
+                            window.location.href = data.url;                          
+                        }else{
+                        	$('#errorcode').removeClass('nhide');
+                            $('#errorcode').children('span').html(data.content); 
+            				//刷新验证码
+                         	$("#verify").val('');
+            				$(".reloadverify").click();
+                        }
+                    }, "json");
+                return false;
+            }            
+            return false;
+        })
+    })
+    
+    
+    $(function(){
+		//刷新验证码
+		var verifyimg = $(".verifyimg").attr("src");
+        $(".reloadverify").click(function(){
+            if( verifyimg.indexOf('?')>0){
+                $(".verifyimg").attr("src", verifyimg+'&random='+Math.random());
+            }else{
+                $(".verifyimg").attr("src", verifyimg.replace(/\?.*$/,'')+'?'+Math.random());
+            }
+        });
+	});
+
+</script>
+<include file="Public:footer" />
+

@@ -1,0 +1,93 @@
+<include file="Public:header" />
+<style type="text/css">
+	.border{width:990px;border:1px solid #dfdfdf;float:center;left: 50%;margin: 10px 0 10px -495px;position: relative;min-height:400px;}
+	.bordernav{
+		border: 0 none;display: block;font: inherit;height: 80px;margin: 0;padding: 0;
+	}
+	.bordertext{
+		width:120px;height:30px;text-align:center;font-size:24px;margin-left:40px;padding-top:40px;float:left;
+	}
+</style>
+<div class="border">
+		<form action="{:U('sn/export')}" method="post" id="page-form">
+			<div class="bordernav">
+				<div class="bordertext">机型:</div>
+				<div class="bordertext"><input type="radio" name="type" value="1" />车载机</div>
+				<div class="bordertext"><input type="radio" name="type" value="2" />壁挂单机</div>
+				<div class="bordertext"><input type="radio" name="type" value="3" />壁挂远控</div>
+				<div class="bordertext"><input type="radio" name="type" value="4" />悟净机</div>
+			</div>
+			<div class="bordernav">
+				<div class="bordertext">经销商:</div>
+				<div class="bordertext">
+					<div class="controls">
+						<select name="dealer" id="dealer">
+							<option value="" >请选择经销商</option>
+							<option value="航天通信北京分公司" >航天通信北京分公司</option>
+							<option value="广州金琥环保科技有限公司" >广州金琥环保科技有限公司</option>
+							<option value="四川民望新能源科技开发有限公司" >四川民望新能源科技开发有限公司</option>
+							<option value="上海澳马车辆物资采购有限公司" >上海澳马车辆物资采购有限公司</option>
+							<option value="北京佰朔泉科技有限公司" >北京佰朔泉科技有限公司</option>
+							<option value="北京市傲博胜咨询有限公司" >北京市傲博胜咨询有限公司</option>
+							<option value="东莞市宇洁新材料有限公司" >东莞市宇洁新材料有限公司</option>
+							<option value="淘微网络科技（上海）有限公司" >淘微网络科技（上海）有限公司</option>
+							<option value="元天百利科技有限公司" >元天百利科技有限公司</option>
+							<option value="上海佳潇信息科技有限公司" >上海佳潇信息科技有限公司</option>
+						</select>
+					</div>
+				</div>
+			</div>	
+			<div class="bordernav" style="height:40px; margin-top:50px;">
+				<button style="float:left;font-size:20px;margin-left:450px;" type="submit">打印</button>				
+			</div>
+		</form>
+</div>
+<script type="text/javascript">  
+function check(){  
+	var type = $('input[name="type"]:checked').val();
+	//var dealerid=[];
+	//var obj = document.getElementById("dealer");
+	//for(var i=0;i<obj.options.length;i++){
+	//    if(obj.options[i].selected){
+	//    	dealerid.push(obj.options[i].value);
+	//    }
+	//}		
+	if(type==null){  
+		alert('请选择机型');  
+		return false;  
+	}else{
+		return true;
+	}
+	/**
+	else if(type == 4){	
+		if(dealerid == 0){
+			alert('请选择经销商');  
+			return false;  
+		}			
+		return true;
+	}else if(type == 1){
+		if(dealerid == 0){
+			alert('请选择经销商');  
+			return false;  
+		}
+		return true;
+	}else if(type == 2 || type == 3){
+		if(dealerid == 0){
+			alert('请选择经销商');  
+			return false;  
+		}
+		return true;
+	}
+	**/
+}
+	$(function () {
+		$("#page-form").submit(function () {	
+            if (check()) {            
+            	return true;
+            }
+            return false;
+		});
+    }) 		  
+	
+</script> 
+<include file="Public:footer" />

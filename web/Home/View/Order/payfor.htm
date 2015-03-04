@@ -1,0 +1,140 @@
+<include file="Public:header" />
+<div id="page" onclick="void(0)">
+	<div id="content" style="min-height:388px;">
+		<div class="pre-approval-content left-column">
+			<h4 style="font-size:18px;line-height:28px;border:dashed 1px #e5e5e5;border-width:1px 0;">             
+        		本次支付金额：<span style="font-size:16px;">&yen;</span><span style="color:#ff6c00;">{:sprintf("%0.2f",$info['total_price'])}</span><span style="font-size:16px;">元</span>             
+        	</h4>
+			<div id="add-payment-method" style="margin-top:20px;">			
+				<div class="tabs">
+          			<div class="bottom-line"></div>
+                 	<ul>
+	                    <li class="current" ><a href="javascript:void(0);">支付宝</a></li>
+	                    <li class=""><a href="javascript:void(0);">银联</a></li>
+	                </ul>
+ 				</div>
+	
+				<!--支付宝支付-->   
+                <div class="alipay payform" style="display:block">
+	                <form class="" action="" method="post" id="card-form" novalidate target="_blank">   
+		                <ul class="ui-list-icons fn-clear">										
+		                    <li li="" class="cashier-bank-kj bank-icon-fix" style="float:left; height:93px; line-height:93px;">
+		                    	<input type="radio" name="paytype" value="alipay" style="border:0px;" id="pay_ali" checked="">
+		                    	<label class="icon-box"  style="font-size:15px;">通过支付宝支付</label>
+		                    </li>
+		                    <div style="float:left;padding-left: 200px;">
+		                    	<img src="__IMG__/alipayqiduan.png" style="margin:0 16px" alt="alipay"/>
+		                    </div>	
+ 						  	 	
+		                </ul>	
+	                    <p class="add-payment-error"></p>
+	                    <if condition="$order['status'] eq 1">
+		               	<div class="actions">
+		               		<button type="submit" disabled="disabled" class="button orange">支付成功</button>
+		           			<span class="loading-indicator"></span>
+		               	</div>
+		               	<h4 style="font-size:18px;line-height:28px;border:dashed 1px #e5e5e5;border-width:1px 0;">             
+		               		订单支付成功，我们会尽快为您发货。     
+		               	</h4>
+		               	<else />
+		               	<div class="actions">
+		               		<button type="submit" class="button orange">立即完成支付</button>
+		           			<span class="loading-indicator"></span>	 
+		           		</div>              
+		               	</if>
+	                </form>
+                </div> 
+                
+				<!--银联支付-->
+			 	<div class="alipay payform" style="display:none;">
+	                <form class="" action="" method="post" id="card-form" novalidate target="_blank"> 
+		                <ul class="ui-list-icons fn-clear">										
+		                    <li class="cashier-bank-kj bank-icon-fix" style="float:left; height:93px; line-height:93px;">
+			                    <input type="radio" name="paytype" value="unionpay2" style="border:0px;" id="pay_ali" checked="checked">
+			                    <label class="icon-box" style="font-size:15px;">银行卡支付</label>
+		                    </li>	
+		                    <li class="cashier-bank-kj bank-icon-fix" style="float:left; height:93px; line-height:93px;">
+			                    <input type="radio" name="paytype" value="unionpay" style="border:0px;" id="pay_ali" >
+			                    <label class="icon-box" style="font-size:15px;">网银支付</label>
+		                    </li> 
+		                    <div style="float:left;padding-left: 200px;">
+			                	<img src="__IMG__/unionPay.png" style="margin:0 16px" alt="unipay" />
+			                </div>  						  	 	
+		                </ul>
+		                <p class="add-payment-error"></p>
+		                <if condition="$order['status'] eq 1">
+		               	<div class="actions">
+		               		<button type="submit" disabled="disabled" class="button orange">支付成功</button>
+		           			<span class="loading-indicator"></span>
+		               	</div>
+		               	<h4 style="font-size:18px;line-height:28px;border:dashed 1px #e5e5e5;border-width:1px 0;">             
+		               		订单支付成功，我们会尽快为您发货。     
+		               	</h4>
+		               	<else />
+		               	<div class="actions">
+		               		<button type="submit" class="button orange">立即完成支付</button>
+		           			<span class="loading-indicator"></span>	 
+		           		</div>              
+		               	</if>
+		       		</form>
+                </div>  
+			</div>
+		</div>
+	</div>
+</div>
+<div id="div_show_bg" class="div_show_bg" style="display: none;"></div>
+<div id="div_show" class="div_show" style="display: none;"> 
+	<iframe frameborder="0" width="100%" height="100%" class="div_show_iframe"></iframe>
+    <div class="div_show_content">
+        <div class="anceng">
+            <div class="title_close">付款遇到问题?<span style="position:absolute;right:10px;font-size:16px; color:#4c727b; cursor:pointer;" onclick="javascript:out();">×</span></div>
+            <div style="width:400px;line-height:24px;margin:0 auto;padding:10px 0;text-align:left;border-top:2px solid #ddd;">
+	          	  支付完成前请不要关闭此窗户。完成支付后请根据你的情况点击下面的按钮:<br>
+	            <em>请在新开网上银行页面完成付款后再选择。</em>
+	            <br>
+	            <span style="display:block;margin:10px;text-align:center;"><input type="button" class="button blue" name="pay" value="已完成支付" onclick="javascript:window.location.reload(true);">
+	            	<input type="button" class="button blue" name="q_pay" value="重新支付" onclick="javascript:window.location.reload(true);">
+	            	<input type="button" class="button blue" name="pay" value="返回我的订单" onclick="location.href='/user/order/'">
+	            </span>
+            </div>   
+       </div>     
+   	</div> 
+</div>
+<script>
+$(".sub_pay").click(function(){
+	if($(this).val() == 1){
+		$(this).val();
+	}
+     $("#div_show_bg").css({"width":$(window).outerWidth(),"height":$(window).outerHeight()}).show(); 
+	 $("#div_show").show();
+ });
+ function out(){
+    $("#div_show_bg").hide(); 
+	$("#div_show").hide();	 
+ }
+
+ $(".tabs li").each(function(index) {
+     $(this).click(function(){
+		   $(".tabs li").removeClass("current");
+		   $(this).addClass("current");
+		   $(".payform").hide();
+		   $(".payform").eq(index).show();
+	  });  
+});
+$(".tabs li").eq(4).click();
+
+_hmt.push(["_trackOrder", {
+    "orderId": "$order['order_no']",
+    "orderTotal": $info['total_price'],
+    "item": [
+        {
+            "skuId": "$info['goods_id']",
+            "skuName": "$info['goods_name']",
+            "category": "悟净机",
+            "Price": $info['goods_price'],
+            "Quantity": $info['quantity']
+        }
+    ]
+}]);
+</script>
+<include file="Public:footer" />

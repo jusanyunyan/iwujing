@@ -1,0 +1,30 @@
+<div class="wap" align="center">
+		<div class="foot">
+			<div class="foot_logo">
+				<img src="__IMG__/logo_httc.jpg" width="194" height="61" alt="航天迅驰" />
+			</div>      
+			
+			<a target="_blank" href="http://weibo.com/wujingcleanair"><div class="nav_logo1" id="weibologo2"> </div></a>
+			<div class="nav_logo2" id="weixinlogo2"> </div>			
+			<div class="contact">联系我们：</div>	
+			<div class="mobile">400-0600-677 </div>	
+			<div class="time">周一至周五：10:00 - 18:00</div>
+		</div>
+		<div class="weixin4" id="weixin2"></div>
+	</div>
+	<div class="copyright">
+		Copyright © 航天迅驰 | 京ICP证10213556号
+	</div>
+</body>	
+<script type="text/javascript">
+	function logout() {
+	    $.get("{:U('Home/User/logout')}", { t: Math.random() },
+	          function (data) {
+	              if (data == '1') {
+	                  window.location.href = window.location.href;
+	              }
+	          });
+	    return false;
+	}
+</script>
+</html>

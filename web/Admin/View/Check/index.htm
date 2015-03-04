@@ -1,0 +1,35 @@
+<extend name="Public/base" />
+<block name="body">
+	<div class="cf">
+		<button class="btn ajax-post confirm" url="{:U('del')}" target-form="ids">删 除</button>
+	</div>
+    <div class="data-table table-striped">		
+		<table class="" style="min-width:910px;">
+			<thead>
+		        <tr>
+		       	 	<th class="row-selected"><input class="checkbox check-all" type="checkbox"></th>
+					<th class="" style="min-width:100px !important">订单编号</th>
+					<th class="" style="min-width:100px !important">操作人姓名</th>
+					<th class="" style="min-width:100px !important">操作时间</th>
+					<th class="" style="min-width:70px !important">操作</th>
+				</tr>
+		    </thead>
+	    	<tbody>
+				<volist name="checkList" id="vo">
+					<tr>
+						<td><input class="ids row-selected" type="checkbox" name="id[]" value="{$vo.id}"></td>
+			            <td>{$vo.order_no}</td>
+			            <td>{$vo.user}</td>
+			            <td>{$vo.create_time}</td>
+			           <td>
+							<a class="confirm ajax-get" title="删除" href="{:U('del?id='.$vo['id'])}">删除</a>
+						</td>
+					</tr>													 
+				</volist>
+			</tbody>	    
+		</table>
+	</div>
+    <div class="page">
+        {$_page}
+    </div>
+</block>

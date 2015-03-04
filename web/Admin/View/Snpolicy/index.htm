@@ -1,0 +1,55 @@
+<extend name="Public/base" />
+<block name="body">
+	<div class="cf">
+		<a class="btn" href="{:U('add')}">新 增</a>
+		<button class="btn ajax-post confirm" url="{:U('del')}" target-form="ids">删 除</button>
+	</div>
+    <div class="data-table table-striped">		
+		<table class="" style="min-width:910px;">
+			<thead>
+		        <tr>
+		        	<th class="row-selected"><input class="checkbox check-all" type="checkbox"></th>
+		       	 	<th class="" style="min-width:40px !important">编号</th>		
+		       	 	<th class="" style="min-width:100px !important">SN码</th>	
+					<th class="" style="min-width:80px !important">赠品策略</th>
+					<th class="" style="min-width:120px !important">状态</th>					
+					<th class="" style="min-width:120px !important">创建时间</th>
+					<th class="" style="min-width:120px !important">更新时间</th>
+					<th class="" style="min-width:70px !important">操作</th>
+				</tr>
+		    </thead>
+	    	<tbody>
+				<volist name="snPolicyList" id="vo">
+					<tr>
+						<td><input class="ids row-selected" type="checkbox" name="id[]" value="{$vo.policy_id}"></td>
+						<td style="height:35px;">{$vo.sid}</td>
+			            <td>{$vo.sn}</td>
+			            <td>{$vo.policy_name}</td>
+			            <td>{$vo.statusName}</td>	                    
+			            <td>{$vo.createtime}</td>
+			            <td>{$vo.updatetime}</td>
+			           	<td>
+							<a title="编辑" href="{:U('edit?id='.$vo['sid'])}">编辑</a>
+							<a class="confirm ajax-get" title="删除" href="{:U('del?id='.$vo['sid'])}">删除</a>
+							<if condition = "$vo[status] eq 1">
+								<a class="confirm ajax-get" title="失效" href="{:U('disable?id='.$vo['sid'])}">失效</a>
+							<else />
+								<a class="confirm ajax-get" title="生效" href="{:U('able?id='.$vo['sid'])}">生效</a>
+							</if>							
+						</td>
+					</tr>													 
+				</volist>
+			</tbody>	    
+		</table>
+	</div>
+    <div class="page">
+        {$_page}
+    </div>
+</block>
+
+<block name="script">
+	<script type="text/javascript">
+	//导航高亮
+	highlight_subnav('{:U('snpolicy/index')}');
+	</script>
+</block>

@@ -1,0 +1,128 @@
+<extend name="Public/base"/>
+
+<block name="body">
+	<div class="main-title">
+		<h2>编辑订单</h2>
+	</div>
+	<form action="{:U()}" method="post" class="form-horizontal">
+		<div class="form-item">
+			<label class="item-label">订单号</label>
+			<div class="controls">
+				<input type="text" class="text input-small" name="order_no" value="{$info.order_no|default=''}">
+			</div>
+		</div>
+		<div class="form-item">
+			<label class="item-label">收件人姓名</span></label>
+			<div class="controls">
+				<input type="text" class="text input-small" name="receiver_name" value="{$info.receiver_name|default=''}">
+			</div>
+		</div>
+		<div class="form-item">
+			<label class="item-label">收件人手机号</label>
+			<div class="controls">
+				<input type="text" class="text input-small" name="receiver_mobile" value="{$info.receiver_mobile|default=0}">
+			</div>
+		</div>
+		<div class="form-item">
+			<label class="item-label">收件人地址</label>
+			<div class="controls">
+				<input type="text" class="text input-large" name="receiver_address" value="{$info.receiver_address|default=0}">
+			</div>
+		</div>
+		<div class="form-item">
+			<label class="item-label">订单状态</label>
+			<div class="controls">
+				<select name="status">
+					<if condition="$info['status'] eq 0 "> 
+						<option value="0" selected>未付款</option>
+					<else /> 
+						<option value="0">未付款</option>
+					</if>				
+					<if condition="$info['status'] eq 1 "> 
+						<option value="1" selected>已付款未发货</option>
+					<else /> 
+						<option value="1">已付款未发货</option>
+					</if>
+					<if condition="$info['status'] eq 2 "> 
+						<option value="2" selected>已发货</option>
+					<else /> 
+						<option value="2">已发货</option>
+					</if>				
+					<if condition="$info['status'] eq 3 "> 
+						<option value="3" selected>已收货</option>
+					<else /> 
+						<option value="3">已收货</option>
+					</if>
+					<if condition="$info['status'] eq 4 "> 
+						<option value="4" selected>已退货</option>
+					<else /> 
+						<option value="4">已退货</option>
+					</if>				
+					<if condition="$info['status'] eq 5 "> 
+						<option value="5" selected>已退款</option>
+					<else /> 
+						<option value="5">已退款</option>
+					</if>
+					<if condition="$info['status'] eq 6 "> 
+						<option value="6" selected>用户取消订单</option>
+					<else /> 
+						<option value="6">用户取消订单</option>
+					</if>				
+					<if condition="$info['status'] eq 7 "> 
+						<option value="7" selected>过时取消订单</option>
+					<else /> 
+						<option value="7">过时取消订单</option>
+					</if>
+				</select>
+			</div>
+		</div>
+		<div class="form-item">
+			<label class="item-label">快递公司</label>
+			<div class="controls">
+				<input type="text" class="text input-small" name="ship_name" value="{$info.ship_name|default=''}">
+			</div>
+		</div>
+		<div class="form-item">
+			<label class="item-label">物流单号</label>
+			<div class="controls">
+				<input type="text" class="text input-small" name="ship_no" value="{$info.ship_no|default=''}">
+			</div>
+		</div>
+		<div class="form-item">
+			<label class="item-label">优惠券码</label>
+			<div class="controls">
+				<input type="text" class="text input-small" name="coupons" value="{$info.coupons|default=''}">
+			</div>
+		</div>
+		<div class="form-item">
+			<label class="item-label">创建时间<span class="check-tips"></span></label>
+			<div class="controls">
+				<input type="text" placeholder="创建时间" value="{$info.createtime|default=''}" class="text input-large" name="createtime">
+			</div>
+		</div>
+		<div class="form-item">
+			<label class="item-label">更新时间<span class="check-tips"></span></label>
+			<div class="controls">
+				<input type="text" placeholder="更新时间" value="{$info.updatetime|default=''}" class="text input-large" name="updatetime">
+			</div>
+		</div>
+		<div class="form-item">
+			<label class="item-label">备注<span class="check-tips"></span></label>
+			<div class="controls">
+				<input type="text" placeholder="备注" value="{$info.remark|default=''}" class="text input-large" name="remark">
+			</div>
+		</div>
+		<div class="form-item">
+			<input type="hidden" name="order_id" value="{$info.order_id|default=''}">
+			<button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+			<button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+		</div>
+	</form>
+</block>
+
+<block name="script">
+	<script type="text/javascript">
+		//导航高亮
+		highlight_subnav('{:U('order/index')}');
+	</script>
+</block>

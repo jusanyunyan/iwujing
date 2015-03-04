@@ -1,0 +1,58 @@
+<extend name="Public/base"/>
+<block name="body">
+	<div class="main-title">
+		<h2>{$info['sid']?'编辑':'新增'}SN码策略</h2>
+	</div>
+	<form action="{:U()}" method="post" class="form-horizontal">	
+		<div class="form-item">
+			<label class="item-label">SN码<span class="check-tips"></span></label>
+			<div class="controls">
+				<input type="text" class="text input-middle" name="sn" value="{$info.sn|default=''}">
+			</div>
+		</div>
+		<div class="form-item">
+			<label class="item-label">赠品策略<span class="check-tips"></span></label>
+			<div class="controls">
+				<select name="policy_id">
+					<volist name="policyList" id="vo">
+						<if condition="$vo['policy_id'] eq $info['policy_id']">
+							<option value="{$vo['policy_id']}" selected>{$vo['policy_name']}</option>
+						<else />
+							<option value="{$vo['policy_id']}">{$vo['policy_name']}</option>
+						</if>											
+					</volist>
+				</select>		
+			</div>
+		</div>
+		<div class="form-item">
+			<label class="item-label">状态</label>
+			<div class="controls">
+				<select name="status">	
+					<if condition="$info['status'] eq 0 "> 
+						<option value="0" selected>不可用</option>
+					<else /> 
+						<option value="0">不可用</option>
+					</if>				
+					<if condition="$info['status'] eq 1 "> 
+						<option value="1" selected>可用</option>
+					<else /> 
+						<option value="1">可用</option>
+					</if>
+				</select>
+			</div>
+		</div>
+		<div class="form-item">
+			<input type="hidden" name="sid" value="{$info.sid|default=''}">
+			<input type="hidden" name="createtime" value="{$info.createtime|default=''}">
+			<input type="hidden" name="updatetime" value="{$info.updatetime|default=''}">
+			<button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+			<button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+		</div>
+	</form>
+</block>
+<block name="script">
+	<script type="text/javascript">
+		//导航高亮
+		highlight_subnav('{:U('snpolicy/index')}');
+	</script>
+</block>

@@ -1,0 +1,50 @@
+<extend name="Public/base" />
+<block name="body">
+	<div class="cf">
+		<a class="btn" href="{:U('add')}">新 增</a>
+		<button class="btn ajax-post confirm" url="{:U('del')}" target-form="ids">删 除</button>
+	</div>
+    <div class="data-table table-striped">		
+		<table class="" style="min-width:910px;">
+			<thead>
+		        <tr>
+		        	<th class="row-selected"><input class="checkbox check-all" type="checkbox"></th>
+		       	 	<th class="" style="min-width:40px !important">编号</th>			
+					<th class="" style="min-width:100px !important">赠品名称</th>
+					<th class="" style="min-width:100px !important">赠品图片</th>
+					<th class="" style="min-width:100px !important">赠品描述</th>
+					<th class="" style="min-width:120px !important">创建时间</th>
+					<th class="" style="min-width:120px !important">更新时间</th>
+					<th class="" style="min-width:70px !important">操作</th>
+				</tr>
+		    </thead>
+	    	<tbody>
+				<volist name="giftList" id="vo">
+					<tr>
+						<td><input class="ids row-selected" type="checkbox" name="id[]" value="{$vo.gift_id}"></td>
+						<td style="height:35px;">{$vo.gift_id}</td>
+			            <td>{$vo.gift_name}</td>
+			            <td><img src="{$vo.icon|get_cover='path'}"  width="50" height="50"/></td>
+			            <td>{$vo.description}</td>
+			            <td>{$vo.createtime}</td>
+			            <td>{$vo.updatetime}</td>
+			           	<td>
+							<a title="编辑" href="{:U('edit?id='.$vo['gift_id'])}">编辑</a>
+							<a class="confirm ajax-get" title="删除" href="{:U('del?id='.$vo['gift_id'])}">删除</a>
+						</td>
+					</tr>													 
+				</volist>
+			</tbody>	    
+		</table>
+	</div>
+    <div class="page">
+        {$_page}
+    </div>
+</block>
+
+<block name="script">
+	<script type="text/javascript">
+	//导航高亮
+	highlight_subnav('{:U('gift/index')}');
+	</script>
+</block>

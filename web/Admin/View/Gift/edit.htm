@@ -1,0 +1,91 @@
+<extend name="Public/base"/>
+<block name="body">
+<script type="text/javascript" src="__STATIC__/uploadify/jquery.uploadify.min.js"></script>
+	<div class="main-title">
+		<h2>{$info['id']?'编辑':'新增'}赠品</h2>
+	</div>
+	<form action="{:U()}" method="post" class="form-horizontal">	
+		<div class="form-item">
+			<label class="item-label">赠品名称<span class="check-tips"></span></label>
+			<div class="controls">
+				<input type="text" class="text input-large" name="gift_name" value="{$info.gift_name|default=''}">
+			</div>
+		</div>
+		<div class="controls">
+			<label class="item-label">图片</label>
+			<input type="file" id="upload_picture">
+			<input type="hidden" name="icon" id="icon" value="{$info['icon']|default=''}"/>
+			<div class="upload-img-box">
+				<notempty name="info['icon']">
+					<div class="upload-pre-item"><img src="{$info.icon|get_cover='path'}"/></div>
+				</notempty>
+			</div>
+		</div>
+		<div class="form-item">
+			<label class="item-label">赠品描述<span class="check-tips"></span></label>
+			<div class="controls">
+				<input type="text" class="text input-large" name="description" value="{$info.description|default=''}">
+			</div>
+		</div>
+		<!--  
+		<div class="form-item">
+			<label class="item-label">创建时间<span class="check-tips"></span></label>
+			<div class="controls">
+				<input type="text" placeholder="创建时间" value="{$info.createtime|default=''}" class="text input-large" name="createtime" id="start_time" >
+			</div>
+		</div>
+		<div class="form-item">
+			<label class="item-label">更新时间<span class="check-tips"></span></label>
+			<div class="controls">
+				<input type="text" placeholder="更新时间" value="{$info.updatetime|default=''}" class="text input-large" name="updatetime" id="end_time">
+			</div>
+		</div>
+		-->
+		<div class="form-item">
+			<input type="hidden" name="gift_id" value="{$info.gift_id|default=''}">
+			<input type="hidden" name="createtime" value="{$info.createtime|default=''}">
+			<input type="hidden" name="updatetime" value="{$info.updatetime|default=''}">
+			<button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+			<button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+		</div>
+	</form>
+</block>
+<block name="script">
+	<script type="text/javascript">
+		//上传图片
+	    /* 初始化上传插件 */
+		$("#upload_picture").uploadify({
+	        "height"          : 30,
+	        "swf"             : "__STATIC__/uploadify/uploadify.swf",
+	        "fileObjName"     : "download",
+	        "buttonText"      : "上传图片",
+	        "uploader"        : "{:U('File/uploadPicture',array('session_id'=>session_id()))}",
+	        "width"           : 120,
+	        'removeTimeout'	  : 1,
+	        'fileTypeExts'	  : '*.jpg; *.png; *.gif;',
+	        "onUploadSuccess" : uploadPicture,
+	        'onFallback' : function() {
+	            alert('未检测到兼容版本的Flash.');
+	        }
+	    });
+		function uploadPicture(file, data){
+	    	var data = $.parseJSON(data);
+	    	var src = '';
+	        if(data.status){
+	        	$("#icon").val(data.id);
+	        	src = data.url || '__ROOT__' + data.path;
+	        	$("#icon").parent().find('.upload-img-box').html(
+	        		'<div class="upload-pre-item"><img src="' + src + '"/></div>'
+	        	);
+	        } else {
+	        	updateAlert(data.info);
+	        	setTimeout(function(){
+	                $('#top-alert').find('button').click();
+	                $(that).removeClass('disabled').prop('disabled',false);
+	            },1500);
+	        }
+	    }
+		//导航高亮
+		highlight_subnav('{:U('gift/index')}');
+	</script>
+</block>

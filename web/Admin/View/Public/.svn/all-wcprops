@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/BaoJia_admin/!svn/ver/2082/trunk/web/Admin/View/Public
+END
+login.htm
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/BaoJia_admin/!svn/ver/562/trunk/web/Admin/View/Public/login.htm
+END
+success.htm
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/BaoJia_admin/!svn/ver/27/trunk/web/Admin/View/Public/success.htm
+END
+error.htm
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/BaoJia_admin/!svn/ver/27/trunk/web/Admin/View/Public/error.htm
+END
+base.htm
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/BaoJia_admin/!svn/ver/2082/trunk/web/Admin/View/Public/base.htm
+END
+exception.htm
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/BaoJia_admin/!svn/ver/27/trunk/web/Admin/View/Public/exception.htm
+END

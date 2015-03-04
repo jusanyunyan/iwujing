@@ -1,0 +1,116 @@
+<include file="Public:header" />
+<link rel="stylesheet" type="text/css" href="__CSS__/user.css" />
+<div id="page" onclick="void(0)">
+    <div id="content">
+        <div id="dialog-frame-container" data-next="" >
+            <div id="dialog-frame" class="dialog-container">
+                <div id="login-dialog" class="auth-dialog-content">
+                    <div class="dialog-title">
+                        <h2>会员登录</h2>
+                    </div>
+                    <div class="dialog-content">                        
+                        <div class="inputs">
+                            <form id="page_login-form" action="" method="post">
+                                <div class="input-container">
+                                    <label for="username">手机号</label>
+                                    <input type="text" autocapitalize="off" tabindex="2" type="text" id="page_username" name="username" placeholder="手机号码" class="email required" value="" />
+                                </div>
+                                <div class="input-container">
+                                    <a tabindex="5" id="reset-password" class="dialog-link" href="index.php?s=user/checkmobile">忘记了密码？</a>
+                                    <label for="password">密码</label>
+                                    <input tabindex="3" autocapitalize="off" id="page_password" type="password" name="password" value="" placeholder="密码"/>
+                                </div>
+                                <p class="error" id="error"> </p>
+                                <div class="input-container">
+                                    <button tabindex="4" id="submit" type="submit" class="orange submit button">登 录</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="clearfix"></div>
+                        <p class="signup-prompt">还没有悟净账户？ <a class="dialog-link" data-dialog-class="no-titlebar" href="index.php?s=user/register">注册</a>.</p>
+                    </div>
+                    <div class="loading-indicator">
+                        <img src="__IMG__/loading-small.gif" />
+                        <span>正在登录...</span>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function ShowError(text) {
+        $("#error").html(text);
+    }
+    function ClearError() {
+        $("#error").html("");
+    }
+
+    function CheckUserName(obj) {
+        var v = obj.val();
+        if (v.length <= 0) {
+            ShowError("请您输入注册手机号进行登录");
+            //obj.focus();
+            return false;
+        }
+        if (/^(((\+86|86)?1[3|4|5|7|8][0-9]\d{8})|((\+\d{2})|(\d{2}))\d{11})$/.test(v)) {
+            ClearError();          
+            return true;
+        }
+        else {
+            ShowError("请您输入正确的手机号");
+            //obj.focus();
+            return false;
+        }
+    }
+
+    function CheckPassword(obj) {
+        var v = obj.val();
+        if (v.length < 6) {
+            ShowError('您输入的密码长度过短,必须大于6个字符');
+            //obj.focus();
+            return false;
+        }
+        else if (v.length > 20) {
+            ShowError('您输入的密码长度过长，请控制在20个字符以内');
+            //obj.focus();
+            return false;
+        }
+        else {
+            ClearError();
+            return true;
+        }
+    }
+
+    $(function () {
+        $("#page_username").blur(function () { CheckUserName($(this)); });
+        $("#page_password").blur(function () { CheckPassword($(this)); });
+    
+		$("#page_login-form").submit(function () {
+			
+			var username = $("#page_username");
+			var password = $("#page_password");
+		
+			if (CheckUserName(username) && CheckPassword(password)) {
+				
+				$.post('index.php?s=user/login', {'username':username.val(),'password':password.val()}, function(data) {
+					
+					if (data.status == 1) {
+						window.location.href = data.url;
+					} else {
+						$('#dialog-frame>div:first').attr('class','auth-dialog-content');
+						if(data.status == -1){
+							$('#mobile_error').html(data.info);
+						}else{
+							ShowError(data.info);
+						}				
+					}
+				}, "json");
+				return false;
+			}
+			return false;			
+		})
+    })
+</script>
+<include file="Public:footer" />

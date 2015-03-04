@@ -1,0 +1,146 @@
+<include file="Public:header" />
+	<link rel="stylesheet" type="text/css" href="__CSS__/global.css" />
+	<div class="main-nav">
+		<div class="container">
+			<ul class="list-inline">
+				<li>
+					<a>免费领取清洗套装</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+    <div id="content" style="min-height:600px;">
+        <div id="dialog-frame-container">      
+            <div id="dialog-frame" class="dialog-container">           
+				<div class="input-container">
+					<div>
+	                 	<input type="text" maxlength="14" value="" class="text entry "  placeholder="请输入14位SN码"  id="sn">
+	                 	<a href="javascript:void(0)" id="wenhao1" style="display:none;">
+	                 		<img src="__IMG__/wenhao1.png" style="float:right;margin:-27px -30px 0px 0px;"/>
+	                 	</a>
+	                 	<a href="javascript:void(0)" id="wenhao2" >
+	                 		<img src="__IMG__/wenhao2.png" style="float:right;margin:-27px -30px 0px 0px;"/>
+	                 	</a>	
+	                 	<a id="right" style="display:none;">
+	                 		<img src="__IMG__/right.png" style="float:right;margin:-27px -30px 0px 0px;"/>
+	                 	</a>                    	                         	
+                 	</div>
+                 	<div class="fl">
+                 		<button class="blue" type="button" id="sn_code">验证</button>
+            		</div> 
+            		<div style="height:50px;margin-top:10px;margin-left:-20px;width:270px;">
+            		<div class="nhide wred1" id="errorsn">
+		               	<img src="__IMG__/err.png" style="top:0px;"/>
+		               	<span>输入的SN码格式有误，请检查</span>
+		         	</div> 
+		         	</div>         		
+                 	<div class="border" id="shiyitu" style="display:block;position:relative;">
+                 		<h5>请按照机器顶盖内部贴纸信息填写，参考：</h5>
+                 		<a href="javascript:void(0)" class="close">
+                 		 	<img src="__IMG__/close.png" style="float:right;margin:-20px 10px 0px 0px;"/>
+                 		</a>
+                 		<img src="__IMG__/shiyitu.jpg">
+                 	</div>                	                               
+             	</div>
+        	</div>	
+        	  	
+			<div class="item-row" style="display:none;" id="item-row">
+				<div class="col col-1">
+					<div class="g-pic" >
+						<a href="index.php?s=index" title="{$details['goods_name']}">
+							<img width="120" height="120" src="" alt="" id="pic">
+						</a>
+					</div>
+					<div class="g-info">							
+						<div class="g-name" id="type">悟净机</div>										
+					</div>
+				</div>
+				<div class="shop-cart-action clearfix" style="margin-top:30px;">
+					<button id="submit" class="btn btn-primary btn-next">领取洗护套装</button>
+				</div>			
+			</div>		
+    	</div>
+	</div>
+<script type="text/javascript">
+//验证码
+function CheckCode(obj){
+    var v = obj.val();
+    if (v.length <= 0) {
+        $('#errorsn').removeClass('nhide');
+        $('#errorsn').children('span').html('请输入机身上的14位SN码！');
+        return false;
+    }else{
+    	if (/^\d{14}$/.test(v)) {
+            $('#errorsn').addClass('nhide');
+            $('#errorsn').children('span').html('');
+            return true;
+        }else {
+            $('#errorsn').removeClass('nhide');
+            $('#errorsn').children('span').html('验证码为14位数字，请检查！');
+            return false;
+        }
+    }   
+}
+
+$(function(){
+	$("#wenhao1").bind("click", function(event) {
+		$("#wenhao1").hide(); 
+		$("#wenhao2").show(); 	
+		$("#shiyitu").show(); 	
+	}),
+	$("#wenhao2").bind("click", function(event) {
+		$("#wenhao2").hide(); 
+		$("#wenhao1").show(); 	
+		$("#shiyitu").hide();		
+	}),
+	$(".close").bind("click", function(event) {
+		$("#wenhao2").hide(); 
+		$("#wenhao1").show(); 	
+		$("#shiyitu").hide();		
+	}),
+	/** 
+	$("#sn").focus(function () { 
+		$("#wenhao1").hide(); 
+		$("#wenhao2").show(); 	
+		$("#shiyitu").show(); 
+		$("#right").hide();
+	}),	
+	**/
+    $("#sn").blur(function () {        
+        CheckCode($(this)); 
+   	});
+    
+    $('#sn_code').click(function(){  
+        var obj = $("#sn");
+		if (CheckCode(obj)){             
+         	var text = obj.val().replace(/\s+/g, '');				
+           	$.post('index.php?s=receive/index', {'sn':text}, function(data){
+           		if(data.status == 1){
+                  	$('#errorsn').addClass('nhide');  
+                  	$("#wenhao1").hide(); 
+            		$("#wenhao2").hide(); 
+            		$("#shiyitu").hide();
+            		$("#sn_code").hide();
+            		$("#right").show(); 
+                  	$("#item-row").show(); 	    
+                  	$("#type").html(data.name);    
+                  	$('#pic').attr('src', data.pic);     
+              	} else {
+              		$("#item-row").hide();
+                 	$('#errorsn').removeClass('nhide');
+                 	$("#errorsn").children('span').html(data.info);
+            	}
+       		}, "json");
+		}
+  		return false;
+    })
+
+    $('#submit').click(function(){ 
+    	var obj = $("#sn");
+    	var text = obj.val().replace(/\s+/g, '');	
+    							
+    	window.location.href = 'index.php?s=receive/review/sn/'+text; 					   	
+    })
+})
+</script>
+<include file="Public:footer" />

@@ -1,0 +1,195 @@
+<include file="Public:header" />
+	<link rel="stylesheet" type="text/css" href="__CSS__/order.css" />
+	<div class="main-nav">
+		<div class="container">
+			<ul class="list-inline">
+				<li>
+					<a>免费领取洗护套装</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+<style>
+.flowsteps li i {
+    background: url("__IMG__/gray2.jpg") no-repeat scroll 50% 50% rgba(0, 0, 0, 0);
+    width: 120px;
+    height: 120px;
+    left: 0px;
+    line-height: 120px;
+    font-size: 20px;
+}
+.flowsteps .num4 li, .flowsteps .num4 .last {
+    width: 43%;
+}
+.flowsteps li {
+    background: url("__IMG__/gray_line.png") repeat-x scroll 0 60px rgba(0, 0, 0, 0);
+    
+}
+.flowsteps .current span i {
+    background-image: url("__IMG__/blue2.jpg");
+}
+.flowsteps em {
+    left: 0;
+}
+.confirm_button {
+    background-color: #ff4a00;
+    border: 1px solid #ff4a00;
+    border-radius: 20px;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+    line-height: 28px;
+    margin-bottom: 0;
+    padding: 0;
+    text-align: center;
+    width: 100px;
+}
+.finish_button {
+    background-color: #28bcdc;
+    border: 1px solid #28bcdc;
+    border-radius: 20px;
+    color: #fff;
+    display: inline-block;
+    font-size: 14px;
+    line-height: 28px;
+    margin-bottom: 0;
+    padding: 0;
+    text-align: center;
+    width: 100px;
+}
+.flowsteps span {
+    text-align:center;
+    width: 120px;
+}
+</style>
+    <div class="contain" style="min-height:500px;" id="container">     
+    	<div class="flowsteps" style="height:600px;width:800px;">
+			<ol class="num4">
+				<volist name="seqList" id="seq" key="k">				
+					<if condition="($k eq 1) and ($seqCount eq 1) and ($k egt $receiveCount)">
+						<li class="first current" style="height:600px;width:15%;margin-left:300px;">
+					<elseif condition="($k eq 1) and ($seqCount eq 2)  and ($k gt $receiveCount)" />
+						<li class="first current" style="height:600px;width:90%;">
+					<elseif condition="($k eq 1) and ($seqCount eq 2)  and ($k elt $receiveCount)" />
+						<li class="first current done" style="height:600px;width:90%;">
+					<elseif condition="($k eq 1) and ($seqCount eq 3)  and ($k gt $receiveCount)" />
+						<li class="first current" style="height:600px;">	
+					<elseif condition="($k eq 1) and ($seqCount eq 3)  and ($k elt $receiveCount)" />
+						<li class="first current done" style="height:600px;">	
+												
+					<elseif condition="($k gt 1) and ($k lt $seqCount) and ($k eq ($receiveCount+1))" />
+						<li class="current" style="height:600px;">
+					<elseif condition="($k gt 1) and ($k lt $seqCount) and ($k gt $receiveCount)" />
+						<li style="height:600px;">					
+					<elseif condition="($k gt 1) and ($k lt $seqCount) and ($k elt $receiveCount)" />
+						<li class="current done" style="height:600px;">	
+					
+					<elseif condition="($k eq $seqCount) and ($k eq ($receiveCount+1))" />
+						<li class="last current" style="height:600px;">	
+					<elseif condition="($k eq $seqCount) and ($k gt $receiveCount)" />
+						<li class="last" style="height:600px;">	
+					<elseif condition="($k eq $seqCount) and ($k eq $receiveCount)" />
+						<li class="last current done">						
+					<else />
+					</if>
+							<span>
+								<i>{$seq['sequence']}</i>
+								<img alt="" src="{$seq.icon|get_cover='path'}" width="120" height="120">
+								<em>{$seq['gift_name']}</em>
+								<if condition="$k elt $receiveCount">
+									<em style="margin-top:30px;">领取时间</em>
+									<em>{$seq['createtime']}</em>
+								<else />
+									<if condition="$k eq ($receiveCount+1)">
+										<em style="margin-top:30px;color:red;">* 建议领取时间</em>
+										<if condition="$k eq 1">
+											<em style="color:red;">收到产品1个月内</em>
+										<else/>
+											<em style="color:red;width:130px;margin-left:-5px;">第{$k-1}次领取后11个月</em>				
+										</if>
+									<else />
+										<em style="margin-top:30px;">* 建议领取时间</em>
+										<if condition="$k eq 1">
+											<em>收到产品1个月内</em>
+										<else/>
+											<em style="width:130px;margin-left:-5px;">第{$k-1}次领取后11个月</em>				
+										</if>
+									</if>
+								</if>										
+								<em style="margin-top:30px;">
+								<if condition="$k ELT ($receiveCount)">
+									<div class="finish_button" disabled="true">已领取</div>
+								<elseif  condition="$k eq ($receiveCount+1)"/>
+									<input type="hidden" name="sequence" id="sequence" value="{$seq['sequence']}" >		
+									<button class="confirm_button" type="submit" id="receive">领取</button>									
+                                	<div class="nhide" id="errorverify" style="width:180px;margin-left:-30px;margin-top:10px;">
+                                		<img style="margin-top:3px;" src="__IMG__/err.png"/>
+                                		<span style="width:160px;float:right;color:red;"></span>                       		
+                                	</div>                               
+								<else />								
+								</if>
+								</em>
+								<if condition="$k elt $receiveCount">
+									<em style="margin-top:30px;">{$seq['username']}</em>
+									<em >{$seq['mobile']}</em>
+									<em >{$seq['address']}</em>
+								<else />
+								</if>
+								<if condition="$seqCount eq 1">
+								<em style="margin-top:20px;">
+								<a href="javascript:;" style="text-decoration:underline;" id="taocan">升级三年洗护套装</a>
+								</em>
+								<else />
+								</if>
+							</span>
+						</li>	
+				</volist>
+			</ol>
+		</div>
+	</div>
+	<div id="dianyuanColor" class="modal fade dianyuanColor in" data-height="660" data-width="660" style="width: 750px; display: none;height:430px;margin-left:-375px;top:57%;" aria-hidden="false">
+		<div class="modal-header" style="border-bottom:none;height:50px;">
+			<a class="close" data-dismiss="modal">
+			<i id="close" class="iconfont"></i>
+			</a>
+			<h3 style="font-size:22px;">免费升级三年洗护套装</h3>
+		</div>
+		<div class="modal-body">
+			<div class="dianyuanColor-con clearfix">
+				<p class="dianyuanColor-con-bg" style="background: url('__IMG__/taocan2.png') no-repeat scroll center center transparent;width:725px;height:340px;text-align:center;"></p>
+			</div>
+		</div>
+	</div>
+<script>
+ $(function () {  
+	 $('#receive').click(function(){								
+		 var sequence = $("#sequence").val();
+		 $.post('', {'sequence':sequence}, function(data){
+			 if(data.status == 1){
+				window.location.href = data.url;
+			 }else{
+				 $('#errorverify').removeClass('nhide');
+		         $('#errorverify').children('span').html(data.info);
+			 }
+		 }, "json");
+		 return false;
+    })
+    $('#taocan').click(function(){  
+           	$.post('index.php?s=index', '', function(data){
+           		if (data.status) {
+           			$("#dianyuanColor").show(); 	
+        			$html=$("<div class='dialogMask'></div>");
+        			$("body").append($html);		                    
+              	} else {
+              		window.location.href = data.url; 
+            	}
+       		}, "json");
+        })
+	$('#container').onclick(function(){
+		$("#dianyuanColor").hide(); 
+		$html.remove();
+	})
+ })
+</script>
+<include file="Public:footer" />

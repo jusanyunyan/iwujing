@@ -1,0 +1,40 @@
+<extend name="Public/base"/>
+<block name="body">   
+    <div class="data-table table-striped">		
+		<table class="" style="min-width:910px;">
+		    <thead>
+		        <tr>
+		        	<th class="" style="min-width:100px !important">订单号</th>
+					<th class="" style="min-width:100px !important">商品名称</th>
+					<th class="" style="min-width:120px !important">商品价格</th>
+					<th class="" style="min-width:100px !important">商品折扣</th>
+					<th class="" style="min-width:120px !important">购买数量</th>
+					<th class="" style="min-width:120px !important">优惠价格</th>
+					<th class="" style="min-width:120px !important">订单总额</th>
+				</tr>
+		    </thead>
+	    	<tbody>
+				<tr>
+					<td>{$info.order_no}</td>
+		            <td>{$info.goods_name}</td>
+		            <td>{$info.goods_price}</td>
+		            <td>{$info.discount}</td>
+		            <td>{$info.quantity}</td>
+		            <td>{$info.coupon_price}</td>
+		            <td>{$info.total_price}</td>
+				</tr>					 
+			</tbody>
+		</table>
+	</div>
+	<div class="form-item">
+		<button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+	</div>
+</block>   
+<block name="script">
+<script type="text/javascript">
+$(function(){
+	//导航高亮
+	highlight_subnav('{:U('order/index')}');
+});
+</script>
+</block>

@@ -1,0 +1,105 @@
+<include file="Public:header" />
+<link rel="stylesheet" type="text/css" href="__CSS__/order.css" />
+<div class="main-nav">
+	<div class="container">
+		<ul class="list-inline">
+			<li>
+				<a>我的订单</a>
+			</li>
+		</ul>
+	</div>
+</div>
+<div class="container" style="min-height:600px;">
+	<div class="uc-full-box">
+		<div class="row">
+			<div class="span16">
+				<div class="xm-line-box uc-box">
+					<div class="box-hd" style="display:none;">
+						<h3 class="title">我的订单</h3>
+						<div class="more" >
+							<div class="uc-order-list-type">
+								<a class="current" href="">全部订单</a>
+								<span class="sep">|</span>
+								<a href="">未支付订单</a>
+								<span class="sep">|</span>
+								<a href="">已关闭订单</a>
+							</div>
+						</div>
+					</div>
+					<div class="box-bd">
+					<if condition="is_array($order)">
+						<div class="uc-order-list-box">							
+							<ul class="uc-order-detail-list">
+								<foreach name="order" item="vo" >
+								<li class="uc-order-detail-item">
+									<table class="order-detail-table">
+										<thead>
+											<tr>
+												<th class="column-info column-t" colspan="3">
+													<div class="column-content">
+														订单号：
+														<a href="">{$vo['order_no']}</a>
+														<span class="sep">|</span>
+														{$vo['receiver_name']}
+														<span class="sep">|</span>
+														{$vo['createtime']}
+													</div>
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td class="column-detail column-l">
+													<ul class="order-goods-list">
+														<li class="first">
+															<a href="index.php?s=/car">
+																<img class="goods-thumb" alt=""  src="__IMG__/{$vo['pic']}">
+															</a>
+															<a class="goods-name" href="index.php?s=/car">{$vo['info']['goods_name']}</a>
+															<span class="goods-price">{$vo['info']['goods_price']}元</span>
+															<span class="goods-link"> </span>
+														</li>
+													</ul>
+												</td>
+												<td class="column-price">
+													<if condition="$vo['status'] egt 1">
+													<div class="order-info order-price">
+														{$vo['info']['total_price']}
+														<br>
+														支付成功
+													</div>
+													<else/>
+													<a href="index.php?s=order/payfor/id/{$vo['order_no']}">
+													<div class="order-info order-price">
+														{$vo['info']['total_price']}
+														<br>
+														立即支付
+													</div>
+													</a>
+													</if>
+												</td>
+												 
+												<td class="column-action column-r">
+													<div class="order-info order-action">
+														<a href="index.php?s=user/orderview/orderid/{$vo['order_no']}">
+															订单详情
+														</a>										
+													</div>
+												</td>										
+											</tr>
+										</tbody>
+									</table>
+								</li>
+								</foreach>
+							</ul>							
+						</div>
+						<else />
+							<div style="font-size:16px;color:red;text-align:center;">您还没有订单记录!</div> 
+						</if>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<include file="Public:footer" />

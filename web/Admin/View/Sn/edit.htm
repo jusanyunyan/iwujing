@@ -1,0 +1,100 @@
+<extend name="Public/base"/>
+
+<block name="body">
+	<div class="main-title">
+		<h2>编辑SN码</h2>
+	</div>
+	<form action="{:U()}" method="post" class="form-horizontal">
+		<div class="form-item">
+			<label class="item-label">SN码类型</label>
+			<div class="controls">
+				<select name="type_id">					
+					<if condition="$info['type_id'] eq 1 "> 
+						<option value="1" selected>车载机</option>
+					<else /> 
+						<option value="1">车载机</option>
+					</if>
+					<if condition="$info['type_id'] eq 2 "> 
+						<option value="2" selected>壁挂单机</option>
+					<else /> 
+						<option value="2">壁挂单机</option>
+					</if>
+					<if condition="$info['type_id'] eq 3 "> 
+						<option value="3" selected>壁挂远控</option>
+					<else /> 
+						<option value="3">壁挂远控</option>
+					</if>					
+					<if condition="$info['type_id'] eq 4 "> 
+						<option value="4" selected>悟净机</option>
+					<else /> 
+						<option value="4">悟净机</option>
+					</if>
+				</select>
+			</div>
+		</div>		
+		<div class="form-item">
+			<label class="item-label">SN码编号<span class="check-tips"></span></label>
+			<div class="controls">
+				<input type="text" class="text input-large" name="value" value="{$info.value|default=''}">
+			</div>
+		</div>
+		<div class="form-item">
+			<label class="item-label">状态</label>
+			<div class="controls">
+				<select name="status">	
+					<if condition="$info['status'] eq 0 "> 
+						<option value="0" selected>未领取</option>
+					<else /> 
+						<option value="0">未领取</option>
+					</if>				
+					<if condition="$info['status'] eq 1 "> 
+						<option value="1" selected>已领取</option>
+					<else /> 
+						<option value="1">已领取</option>
+					</if>
+				</select>
+			</div>
+		</div>
+		<div class="form-item">
+			<label class="item-label">创建时间<span class="check-tips"></span></label>
+			<div class="controls">
+				<input type="text" placeholder="创建时间" value="{$info.createtime|default=''}" class="text input-large" name="createtime" id="start_time" >
+			</div>
+		</div>
+		<div class="form-item">
+			<label class="item-label">更新时间<span class="check-tips"></span></label>
+			<div class="controls">
+				<input type="text" placeholder="更新时间" value="{$info.updatetime|default=''}" class="text input-large" name="updatetime" id="end_time">
+			</div>
+		</div>
+		<div class="form-item">
+			<input type="hidden" name="id" value="{$info.id|default=''}">
+			<button class="btn submit-btn ajax-post" id="submit" type="submit" target-form="form-horizontal">确 定</button>
+			<button class="btn btn-return" onclick="javascript:history.back(-1);return false;">返 回</button>
+		</div>
+	</form>
+</block>
+
+<block name="script">
+	<link href="__STATIC__/datetimepicker/css/datetimepicker.css" rel="stylesheet" type="text/css">
+	<link href="__STATIC__/datetimepicker/css/dropdown.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src="__STATIC__/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+	<script type="text/javascript" src="__STATIC__/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+	<script type="text/javascript">
+		$('#start_time').datetimepicker({
+	        format: 'yyyy-mm-dd hh:ii:ss',
+	        language:"zh-CN",
+		    minView:2,
+		    autoclose:true
+	    });
+	
+	    $('#end_time').datetimepicker({
+	        format: 'yyyy-mm-dd hh:ii:ss',
+	        language:"zh-CN",
+		    minView:2,
+		    autoclose:true
+	    });
+		//导航高亮
+		highlight_subnav('{:U('sn/index')}');
+	</script>
+</block>

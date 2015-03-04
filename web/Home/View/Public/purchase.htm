@@ -1,0 +1,178 @@
+	<div id="dianyuanColor" class="modal fade dianyuanColor in" data-height="660" data-width="660" style="width: 660px; display: none;" aria-hidden="false">
+		<div class="modal-header">
+			<a class="close" data-dismiss="modal">
+			<i id="close" class="iconfont"></i>
+			</a>
+			<h3>购买悟净空气净化器</h3>
+		</div>
+		<div class="modal-body">
+			<div class="dianyuanColor-con clearfix">
+				<p class="dianyuanColor-con-bg" style="background: url('__IMG__/goods/HTTX-WJL-BK.jpg') no-repeat scroll center center transparent;"></p>
+				<dl id="selectcolor" data-sid="1">
+					<dt>请选择颜色</dt>
+					<dd>
+						<ul class="sys_spec_img dianyuanColor-con-list">
+							<li data-aid="1"><a href="javascript:;" title="科技白"><img src="__IMG__/goods/BK_50.jpg" alt="科技白" /></a><i></i></li>
+							<li data-aid="2"><a href="javascript:;" title="薄荷蓝"><img src="__IMG__/goods/SB_50.jpg" alt="薄荷蓝" /></a><i></i></li>
+							<!-- 
+							<li data-aid="3"><a href="javascript:;" title="迷彩绿"><img src="__IMG__/goods/CF_50.jpg" alt="迷彩绿" /></a><i></i></li>
+							-->
+						</ul>	
+					</dd>
+				</dl>
+				<dl id="selecttype" data-sid="2" style="margin-top:20px;">
+					<dt>请选择型号</dt>
+					<dd >
+						<ul class="sys_spec_text dianyuanColor-con-list">
+							<li data-aid="6"><a href="javascript:;" title="S">S</a><i></i></li>
+							<li data-aid="7"><a href="javascript:;" title="M">M</a><i></i></li>
+							<li data-aid="8"><a href="javascript:;" title="L">L</a><i></i></li>
+						</ul>
+					</dd>
+				</dl>
+				<dl>
+				 	<label class="error wred1 h22" style="width:350px;">
+						<div class="nhide" id="errorcode"><img src="__IMG__/err.png"><span>请选择颜色和型号</span></div>
+					</label>
+				</dl>
+				<input type="hidden" value="" id="cid"/>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<span class="iteminfo_price">小计 <b class="sys_item_price"></b></span>
+			<a class="btn" id="next">下一步</a>
+		</div>
+	</div>
+	<div id="J_modalWeixin" class="modal modal-weixin">
+		<div class="modal-header">
+			<a class="close">
+				<div class="iconfont"></div>
+			</a>
+			<h3>悟净官方微信二维码</h3>
+		</div>
+		<div class="modal-body">
+			<p style="margin: 0 0 10px;">
+			打开微信，点击右上角的“+”，
+			<br>
+			选择“扫一扫”功能，对准下方二维码即可。
+			</p>
+			<img width="150px" height="150px" src="__IMG__/wujing_weixinb.jpg" alt="悟凈微信LOGO">
+		</div>
+	</div>
+<script type="text/javascript">
+//价格json
+var sys_item={
+	//"price":"2750",
+	"picurl":"goods/HTTX-WJL-BK.jpg",
+	"sys_attrprice":{"1_6":{"price":"2750","picurl":"goods/HTTX-WJS-BK.jpg"},"2_6":{"price":"2750","picurl":"goods/HTTX-WJS-SB.jpg"},"3_6":{"price":"2750","picurl":"goods/HTTX-WJS-CF.jpg"},"1_7":{"price":"3500","picurl":"goods/HTTX-WJM-BK.jpg"},"2_7":{"price":"3500","picurl":"goods/HTTX-WJM-SB.jpg"},"3_7":{"price":"3500","picurl":"goods/HTTX-WJM-CF.jpg"},"1_8":{"price":"4600","picurl":"goods/HTTX-WJL-BK.jpg"},"2_8":{"price":"4600","picurl":"goods/HTTX-WJL-SB.jpg"},"3_8":{"price":"4600","picurl":"goods/HTTX-WJL-CF.jpg"}}};
+	
+    $(function(){
+		$("#signin-form").submit(function () {			
+			var username = $("#mobile");
+			var password = $("#pass");
+			$.post('index.php?s=user/login', {'username':username.val(),'password':password.val()}, function(data) {
+				
+				if (data.status == 1) {
+					window.location.href = data.url;
+				} else {
+					location.reload();				
+				}
+			}, "json");
+			return false;		
+		})
+        
+    	$("#selectcolor, #selecttype").each(function(){
+    		var i=$(this);
+    		var p=i.find("ul>li");
+    		p.click(function(){
+    			if($(this).hasClass("selected")){
+    				//$(this).removeClass("selected");
+    				//i.removeAttr("data-attrval");
+    			}else{
+    				$(this).addClass("selected").siblings("li").removeClass("selected");
+    				i.attr("data-attrval",$(this).attr("data-aid"))
+    			}
+    			getattrprice() 
+    		})
+    	})
+    	
+		function getattrprice(){
+			var defaultstats=true;
+			var _val='';
+			var _resp={
+				price:".sys_item_price"
+			}  
+			$("#selectcolor, #selecttype").each(function(){
+				
+				var i=$(this);
+				var v=i.attr("data-attrval");
+				if(!v){
+					defaultstats=false;
+				}else{
+					_val+=_val!=""?"_":"";
+					_val+=v;
+				}				
+			})
+			$("#cid").val(_val);
+			if(defaultstats){
+				_price=sys_item['sys_attrprice'][_val]['price'];
+				picurl=sys_item['sys_attrprice'][_val]['picurl'];
+			}else{
+				_price=sys_item['price'];
+				picurl=sys_item['picurl'];
+			}
+			$(_resp.price).text(_price);
+			$('.dianyuanColor-con-bg').css('background', 'url(./Public/Home/images/'+picurl+')');
+		}
+    	
+        $('#buy').click(function(){  
+           	$.post('index.php?s=index', '', function(data){
+           		if (data.status) {
+           			$("#dianyuanColor").show(); 	
+        			$html=$("<div class='dialogMask'></div>");
+        			$("body").append($html);		                    
+              	} else {
+              		window.location.href = data.url; 
+            	}
+       		}, "json");
+        })
+        
+        $('#buy2').click(function(){  
+           	$.post('index.php?s=index', '', function(data){
+           		if (data.status) {
+           			$("#dianyuanColor").show(); 	
+        			$html=$("<div class='dialogMask'></div>");
+        			$("body").append($html);		                    
+              	} else {
+              		window.location.href = data.url; 
+            	}
+       		}, "json");
+        })
+        
+        $('#receive').click(function(){
+			$.post('index.php?s=index', '', function(data){
+				if (data.status) {
+					window.location.href = 'index.php?s=receive/index';	                    
+              	} else {
+              		window.location.href = data.url; 
+            	}
+        	}, "json");
+        })
+
+        $('#next').click(function(){
+        	var cid = $('#cid').val();
+        	
+			if(cid.indexOf('_')>0){
+				$('#errorcode').addClass('nhide');
+				var strs= new Array(); 
+				strs=cid.split('_');  
+				cid=strs[0];
+				tid=strs[1];
+				window.location.href = 'index.php?s=order/checkout/cid/'+cid+'/tid/'+tid;
+			}else{
+				$('#errorcode').removeClass('nhide');
+			}
+       	})
+        
+    })
+</script>

@@ -1,0 +1,180 @@
+<extend name="Public/base"/>
+<block name="body">   
+    <assign name="current_url" value="$Think.get.status" />
+	<assign name="diff_time_type" value="$Think.get.diff_time_type" />
+	<script type="text/javascript">
+		var stype="{$Think.get.stype}";
+	    $(function(){			
+			if(stype==""){
+				$("#sch-sort-txt").text("订单编号").attr("data",2);
+			}
+		});
+	</script>
+    <div class="cf">
+		<div class="fl">           
+		  	<ul class="f1_ul">
+				<li><a class="btn<eq name='current_url' value='0'>_hover</eq>" href="{:U('Order/index',array('status'=>'0'))}" target="_self">未付款</a></li>
+			</ul>
+			
+			<ul class="f1_ul">
+				<li><a class="btn<eq name='current_url' value='1'>_hover</eq>" href="{:U('Order/index',array('status'=>'1'))}" target="_self">已付款未发货</a></li>
+			</ul>
+			
+            <ul class="f1_ul">
+				<li><a class="btn<eq name='current_url' value='2'>_hover</eq>" href="{:U('Order/index',array('status'=>'2'))}" target="_self">已发货</a></li>
+			</ul>
+			<ul class="f1_ul">
+				<li><a class="btn<eq name='current_url' value='3'>_hover</eq>" href="{:U('Order/index',array('status'=>'3'))}" target="_self">已收货</a></li>
+			</ul>
+			<ul class="f1_ul">
+				<li><a class="btn<eq name='current_url' value='4'>_hover</eq>" href="{:U('Order/index',array('status'=>'4'))}" target="_self">已退货</a></li>
+			</ul>
+			<ul class="f1_ul">
+				<li><a class="btn<eq name='current_url' value='5'> _hover</eq>" href="{:U('Order/index',array('status'=>'5'))}" target="_self">已退款</a></li>
+			</ul>
+        </div> 
+        <!-- 高级搜索 -->
+		<div class="search-form fr cf">
+			<div class="sleft">
+				<div class="drop-down" style="width:90px;">
+					<if condition="$_GET['stype'] eq ''">
+						<span id="sch-sort-txt" class="sort-txt" style="width:65px;" data="{$status}"></span>
+					<else/>
+						<span id="sch-sort-txt" class="sort-txt" style="width:65px;" data="{$_GET['stype']}">
+					</if>
+	                    <if condition="$_GET['stype'] eq '1'">手机</if>
+	                    <if condition="$_GET['stype'] eq '2'">订单编号</if>
+	                    <if condition="$_GET['stype'] eq '3'">下单时间</if>
+					</span>		
+					<i class="arrow arrow-down"></i>
+					<ul id="sub-sch-menu" class="nav-list hidden">
+						<li><a href="javascript:;" value="1">手机</a></li>
+						<li><a href="javascript:;" value="2">订单编号</a></li>
+						<li><a href="javascript:;" value="3">下单时间</a></li>
+					</ul>
+				</div>
+				<if condition="$_GET['stype'] eq '3'">
+                    <input type="text" name="keywords" class="search-input" value="{:I('get.create_time')}" placeholder="请输入订单相关条件">
+					<script>
+						$(".search-input").removeAttr("name").attr("id","create_time").attr("name","create_time");
+					</script>	
+				<else/>
+					<input type="text" name="keywords" class="search-input" value="{:I('get.keywords')}" placeholder="请输入订单相关条件">
+				</if>
+				<a class="sch-btn" href="javascript:;" id="search" url="{:U('Admin/Order/index','cate_id='.$cate_id,false)}"><i class="btn-search"></i></a>
+			</div>  
+		</div>
+    </div>
+    <div class="data-table table-striped">		
+		<table class="" style="min-width:910px;">
+		    <thead>
+		        <tr>
+					<th class="" style="min-width:70px !important">订单号</th>
+					<th class="" style="min-width:70px !important">收货人姓名</th>
+					<th class="" style="min-width:70px !important">收货人手机号</th>
+					<th class="" style="min-width:100px !important">收货人地址</th>
+					<th class="" style="min-width:60px !important">订单状态</th>
+					<th class="" style="min-width:60px !important">快递公司</th>
+					<th class="" style="min-width:60px !important">物流单号</th>
+					<th class="" style="min-width:60px !important">优惠券码</th>
+					<th class="" style="min-width:60px !important">创建时间</th>
+					<th class="" style="min-width:60px !important">更新时间</th>
+					<th class="" style="min-width:60px !important">备注</th>
+					<th class="" style="min-width:80px !important">操作</th>
+				</tr>
+		    </thead>
+	    	<tbody>
+				<volist name="orderList" id="vo">
+					<tr>
+			            <td>{$vo.order_no}</td>
+			            <td>{$vo.receiver_name}</td>
+			            <td>{$vo.receiver_mobile}</td>
+			            <td>{$vo.receiver_address}</td>
+			            <td>{$vo.status}</td>
+			            <td>{$vo.ship_name}</td>
+			            <td>{$vo.ship_no}</td>
+			             <td>{$vo.coupon}</td>
+			            <td>{$vo.createtime}</td>
+			            <td>{$vo.updatetime}</td>
+			            <td>{$vo.remark}</td>
+			            <td>
+			            	<a title="编辑" href="{:U('edit?id='.$vo['order_id'])}">编辑</a>
+			            	<a title="详情" href="{:U('detail?id='.$vo['order_no'])}">详情</a>
+			            </td>
+					</tr>					 
+				</volist>
+			</tbody>
+		</table>
+	</div>
+    <div class="page">
+        {$_page}
+    </div>
+</block>   
+<block name="script">
+<link href="__STATIC__/datetimepicker/css/datetimepicker.css" rel="stylesheet" type="text/css">
+<link href="__STATIC__/datetimepicker/css/dropdown.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="__STATIC__/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="__STATIC__/datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<script type="text/javascript">
+$(function(){
+	//搜索功能
+	$("#search").click(function(){
+		var url = $(this).attr('url');
+		var status = $("#sch-sort-txt").attr("data");
+        var query  = $('.search-form').find('input').serialize();
+        query = query.replace(/(&|^)(\w*?\d*?\-*?_*?)*?=?((?=&)|(?=$))/g,'');
+        query = query.replace(/^&/g,'');
+		if(status != ''){
+			query = 'stype=' + status + "&" + query;
+        }
+        if( url.indexOf('?')>0 ){
+            url += '&' + query;
+        }else{
+            url += '?' + query;
+        }
+		window.location.href = url;
+	});
+
+	/* 状态搜索子菜单 */
+	$(".search-form").find(".drop-down").hover(function(){
+		$("#sub-sch-menu").removeClass("hidden");
+	},function(){
+		$("#sub-sch-menu").addClass("hidden");
+	});
+	$("#sub-sch-menu li").find("a").each(function(){
+		$(this).click(function(){
+			var text = $(this).text();
+			if($(this).attr("value")==3){
+				$(".search-input").removeAttr("name").attr("id","create_time").attr("name","create_time");
+				
+				    $('#create_time').datetimepicker({
+						format: 'yyyy-mm-dd',
+						language:"zh-CN",
+						minView:2,
+						autoclose:true
+					});
+			}
+			$("#sch-sort-txt").text(text).attr("data",$(this).attr("value"));
+			$("#sub-sch-menu").addClass("hidden");
+			
+			
+		})
+	});
+	//回车自动提交
+    $('.search-form').find('input').keyup(function(event){
+        if(event.keyCode===13){
+            $("#search").click();
+			 return false;
+        }
+    });
+ 	$('#create_time').datetimepicker({
+        format: 'yyyy-mm-dd',
+        language:"zh-CN",
+	    minView:2,
+	    autoclose:true
+    });
+	//导航高亮
+	highlight_subnav('{:U('order/index')}');
+});
+</script>
+</block>

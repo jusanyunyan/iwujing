@@ -1,0 +1,182 @@
+<extend name="Public/base"/>
+
+<block name="body">
+    <div id="main" class="main" style="min-height: 233px;">
+	    <div class="main-title">
+			<h2>订单信息列表</h2>
+		</div>
+	    <div class="cf">
+			<div class="fl">           
+			  	<ul class="f1_ul">
+					<li><a class="btn<eq name='current_url' value='0'>_hover</eq>" href="{:U('Index/index',array('status'=>'0'))}" target="_self">未付款</a></li>
+				</ul>
+				
+				<ul class="f1_ul">
+					<li><a class="btn<eq name='current_url' value='1'>_hover</eq>" href="{:U('Index/index',array('status'=>'1'))}" target="_self">已付款未发货</a></li>
+				</ul>
+				
+	            <ul class="f1_ul">
+					<li><a class="btn<eq name='current_url' value='2'>_hover</eq>" href="{:U('Index/index',array('status'=>'2'))}" target="_self">已发货</a></li>
+				</ul>
+				<ul class="f1_ul">
+					<li><a class="btn<eq name='current_url' value='3'>_hover</eq>" href="{:U('Index/index',array('status'=>'3'))}" target="_self">已收货</a></li>
+				</ul>
+				<ul class="f1_ul">
+					<li><a class="btn<eq name='current_url' value='4'>_hover</eq>" href="{:U('Index/index',array('status'=>'4'))}" target="_self">已退货</a></li>
+				</ul>
+				<ul class="f1_ul">
+					<li><a class="btn<eq name='current_url' value='5'> _hover</eq>" href="{:U('Index/index',array('status'=>'5'))}" target="_self">已退款</a></li>
+				</ul>
+	        </div> 
+	    </div>
+	    <div class="data-table table-striped">		
+			<table class="" style="min-width:910px;">
+			    <thead>
+			        <tr>
+						<th class="" style="min-width:100px !important">订单号</th>
+						<th class="" style="min-width:100px !important">收货人姓名</th>
+						<th class="" style="min-width:100px !important">收货人手机号</th>
+						<th class="" style="min-width:120px !important">收货人地址</th>
+						<th class="" style="min-width:100px !important">订单状态</th>
+						<th class="" style="min-width:120px !important">物流单号</th>
+						<th class="" style="min-width:120px !important">创建时间</th>
+						<th class="" style="min-width:120px !important">更新时间</th>
+						<th class="" style="min-width:70px !important">操作</th>
+					</tr>
+			    </thead>
+		    	<tbody>
+						<volist name="orderList" id="vo">
+							<tr>
+					            <td>{$vo.order_no}</td>
+					            <td>{$vo.receiver_name}</td>
+					            <td>{$vo.receiver_mobile}</td>
+					            <td>{$vo.receiver_address}</td>
+					            <td>{$vo.status}</td>
+					            <td>{$vo.ship_no}</td>
+					            <td>{$vo.createtime}</td>
+					            <td>{$vo.updatetime}</td>
+					            <td>编辑</td>
+							</tr>							
+							<tr>
+								<th class="" style="min-width:100px !important"></th>
+								<th class="" style="min-width:100px !important"></th>
+								<th class="" style="min-width:100px !important">商品名称</th>
+								<th class="" style="min-width:120px !important">商品价格</th>
+								<th class="" style="min-width:100px !important">商品折扣</th>
+								<th class="" style="min-width:120px !important">购买数量</th>
+								<th class="" style="min-width:120px !important">订单总额</th>
+								<th class="" style="min-width:120px !important"></th>
+								<th class="" style="min-width:70px !important"></th>
+							</tr>
+							
+								<tr>
+									<td></td>
+									<td></td>
+						            <td>{$vo.order_goods.goods_name}</td>
+						            <td>{$vo.order_goods.goods_price}</td>
+						            <td>{$vo.order_goods.discount}</td>
+						            <td>{$vo.order_goods.quantity}</td>
+						            <td>{$vo.order_goods.total_price}</td>
+						            <td></td>
+						            <td></td>
+								</tr>
+								 
+							</volist>
+				</tbody>
+		    
+		    </table>
+	    </div>
+	</div>
+    <div class="page">
+        {$_page}
+    </div>
+</block;   
+    
+    
+    
+    
+<!-- /内容区 -->
+    <script type="text/javascript">
+    (function(){
+        var ThinkPHP = window.Think = {
+            "ROOT"   : "__ROOT__", //当前网站地址
+            "APP"    : "__APP__", //当前项目地址
+            "PUBLIC" : "__PUBLIC__", //项目公共目录地址
+            "DEEP"   : "{:C('URL_PATHINFO_DEPR')}", //PATHINFO分割符
+            "MODEL"  : ["{:C('URL_MODEL')}", "{:C('URL_CASE_INSENSITIVE')}", "{:C('URL_HTML_SUFFIX')}"],
+            "VAR"    : ["{:C('VAR_MODULE')}", "{:C('VAR_CONTROLLER')}", "{:C('VAR_ACTION')}"]
+        }
+    })();
+    </script>
+    <script type="text/javascript" src="__JS__/think.js"></script>
+    <script type="text/javascript" src="__JS__/common.js"></script>
+    <script type="text/javascript">
+        +function(){
+            var $window = $(window), $subnav = $("#subnav"), url;
+            $window.resize(function(){
+                $("#main").css("min-height", $window.height() - 130);
+            }).resize();
+
+            /* 左边菜单高亮 */
+            url = window.location.pathname + window.location.search;
+            url = url.replace(/(\/(p)\/\d+)|(&p=\d+)|(\/(id)\/\d+)|(&id=\d+)|(\/(group)\/\d+)|(&group=\d+)/, "");
+            $subnav.find("a[href='" + url + "']").parent().addClass("current");
+         
+            /* 左边菜单显示收起 */
+            $("#subnav").on("click", "h3", function(){
+                var $this = $(this);
+                $this.find(".icon").toggleClass("icon-fold");
+                $this.next().slideToggle("fast").siblings(".side-sub-menu:visible").
+                      prev("h3").find("i").addClass("icon-fold").end().end().hide();
+            });
+
+            $("#subnav h3 a").click(function(e){e.stopPropagation()});
+
+            /* 头部管理员菜单 */
+            $(".user-bar").mouseenter(function(){
+                var userMenu = $(this).children(".user-menu ");
+                userMenu.removeClass("hidden");
+                clearTimeout(userMenu.data("timeout"));
+            }).mouseleave(function(){
+                var userMenu = $(this).children(".user-menu");
+                userMenu.data("timeout") && clearTimeout(userMenu.data("timeout"));
+                userMenu.data("timeout", setTimeout(function(){userMenu.addClass("hidden")}, 100));
+            });
+
+	        /* 表单获取焦点变色 */
+	        $("form").on("focus", "input", function(){
+		        $(this).addClass('focus');
+	        }).on("blur","input",function(){
+				        $(this).removeClass('focus');
+			        });
+		    $("form").on("focus", "textarea", function(){
+			    $(this).closest('label').addClass('focus');
+		    }).on("blur","textarea",function(){
+			    $(this).closest('label').removeClass('focus');
+		    });
+
+            // 导航栏超出窗口高度后的模拟滚动条
+            var sHeight = $(".sidebar").height();
+            var subHeight  = $(".subnav").height();
+            var diff = subHeight - sHeight; //250
+            var sub = $(".subnav");
+            if(diff > 0){
+                $(window).mousewheel(function(event, delta){
+                    if(delta>0){
+                        if(parseInt(sub.css('marginTop'))>-10){
+                            sub.css('marginTop','0px');
+                        }else{
+                            sub.css('marginTop','+='+10);
+                        }
+                    }else{
+                        if(parseInt(sub.css('marginTop'))<'-'+(diff-10)){
+                            sub.css('marginTop','-'+(diff-10));
+                        }else{
+                            sub.css('marginTop','-='+10);
+                        }
+                    }
+                });
+            }
+        }();
+    </script>    
+</body>

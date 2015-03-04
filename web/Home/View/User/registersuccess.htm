@@ -1,0 +1,31 @@
+<include file="Public:header" />
+<link rel="stylesheet" type="text/css" href="__CSS__/order.css" />
+<div class="main-nav"></div>
+<div class="contain" style="min-height:500px;text-align:center;">
+	<div style="width:990px;height:70px;margin-top:150px;font-size:50px;color:#ff4a00;"><img src="__IMG__/regsuccess.jpg"/></div>
+	<div style="width:990px;height:30px;margin-top:10px;font-size:20px;color:#ff4a00">
+		<b id="wait">5</b> 秒后将自动跳转到首页
+	</div>
+	<div style="margin-top:100px;">
+		<a id="href" href="index.php?s=index">
+			<div class="btn" style="background-color: #28bcdc;border: 1px solid #28bcdc;font-size:16px;">去首页</div>
+		</a>
+	</div>
+</div>
+<script type="text/javascript">
+(function(){
+ var wait = document.getElementById('wait'),href = document.getElementById('href').href;
+ var interval = setInterval(function(){
+     	var time = --wait.innerHTML;
+     	if(time <= 0) {
+     		location.href = href;
+     		clearInterval(interval);
+     	};
+     }, 1000);
+  window.stop = function (){
+         console.log(111);
+            clearInterval(interval);
+ }
+ })();
+</script>
+<include file="Public:footer" />

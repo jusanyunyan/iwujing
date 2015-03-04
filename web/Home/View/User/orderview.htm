@@ -1,0 +1,141 @@
+<include file="Public:header" />
+<link rel="stylesheet" type="text/css" href="__CSS__/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="__CSS__/global.css" />
+<div class="container" style="width:940px;">
+	<div class="row">				
+		<div class="span16">
+			<div class="xm-line-box uc-box uc-order-detail-box">
+				<div class="box-hd">
+					<h3 class="title">订单号：{$orderInfo['order_no']}</h3>
+				</div>
+				<div class="box-bd">
+					<div class="order-detail-tables">
+						<table class="order-detail-table">
+							<tbody>
+								<tr>
+									<td class="column-detail">
+										<ul class="order-goods-list">
+											<li class="first">
+												<a href="index.php?s=/car" target="_blank">
+													<img class="goods-thumb" alt=""  src="__IMG__/{$orderGoods['pic']}">
+												</a>
+												<a class="goods-name" href="index.php?s=/car" target="_blank">{$orderGoods['goods_name']}</a>
+												<span class="goods-price">{$orderGoods['goods_price']}元</span>
+												<span class="goods-link"> </span>
+												<span class="goods-amount">x {$orderGoods['quantity']}</span>
+											</li>
+										</ul>
+									</td>
+									<td class="column-price">
+										<div class="order-info order-price">{$orderInfo['statusvalue']}</div>
+									</td>
+									<td class="column-date">
+										<div class="order-info order-date">
+											{$orderInfo['date']}
+											<br>
+											{$orderInfo['time']}
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td class="column-delivery" colspan="4">
+										<div class="order-delivery-status">
+											<div class="order-delivery-container">											
+												<if condition="$express neq ''">
+												<div class="delivery-status-info">
+													<span>物流信息：</span>
+													{$orderInfo['ship_name']}{$orderInfo['ship_no']}
+												</div>
+												<div class="more">
+													<a class="J_checkDelivery" id="express">
+													查看物流信息>														
+													</a>
+												</div>
+												<div class="delivery-status" id="delivery" style="display:block;">
+													<div class="delivery-status-info">
+														运单号：{$orderInfo['ship_no']}
+													</div>
+													<div class="delivery-status-detail has-result">
+														<ul>
+															<foreach name="express" item="vo" >
+															<li>
+																<span class="text">{$vo['remark']}</span>
+																<br>
+																{$vo['acceptTime']}
+															</li>
+															</foreach>
+														</ul>
+													</div>
+													<span class="arrow"></span>
+												</div>
+												<else/>
+												<div class="delivery-status-info">
+													<span>物流信息：暂无</span>
+												</div>
+												</if>
+											</div>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="order-detail-total clearfix">
+							<dl class="total-list" style="float:left;">
+								<dt>商品总价：</dt>
+								<dd>{$orderGoods['total_price']}元</dd>
+								<dt>优惠金额：</dt>
+								<dd>{$orderGoods['coupon_price']}元</dd>
+								<dt>运费：</dt>
+								<dd>0元</dd>
+								<dt>实付金额：</dt>
+								<dd>
+								<b>{$orderGoods['total_price']}</b>
+								元
+								</dd>
+							</dl>
+						</div>	
+					</div>
+				</div>
+			
+			
+				<div class="order-delivery-address">
+					<div id="changeAddress" class="order-text-section" data-update="http://order.mi.com/order/updatehandler/orderId/1141014720018484/type/address" data-get="http://order.mi.com/order/updaterender/orderId/1141014720018484/type/address">
+						<h4>收货信息 </h4>
+						<table class="order-text-table">
+							<tbody>
+								<tr>
+									<th>姓         名：</th>
+									<td>{$orderInfo['receiver_name']}</td>
+								</tr>
+								<tr>
+									<th>收货地址：</th>
+									<td>{$orderInfo['receiver_address']}</td>
+								</tr>
+								<tr>
+									<th>联系电话：</th>
+									<td>{$orderInfo['receiver_mobile']}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+  
+<script>
+window.onload=function(){
+	var express=document.getElementById("express");
+	var delivery=document.getElementById("delivery");
+	express.onclick=function(){
+		if(delivery.style.display=="block"){
+			delivery.style.display="none";
+		}else{
+			delivery.style.display="block";
+		}
+	}
+}
+</script>
+
+<include file="Public:footer" />

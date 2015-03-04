@@ -1,0 +1,155 @@
+<include file="Public:header" />
+<link rel="stylesheet" type="text/css" href="__CSS__/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="__CSS__/global.css" />
+<div class="main-nav">
+	<div class="col-xs-12">
+		<div class="container header-content-container">
+			<ul class="list-inline">
+				<li>
+					<a href="">首页</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="container content-container" style="min-height:400px;">
+	<!-- 导航区 -->
+	<div class="row">			
+		<div class="col-xs-3">
+			<div class="row">
+				<!-- <div class="col-xs-12"> -->
+					<ol class="breadcrumb">
+						<li>
+							<a href="index.php">首页</a>
+						</li>
+						<li>
+							<a href="index.php?s=member">个人中心</a>
+						</li>
+						
+					</ol>
+				<!-- </div> -->
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="panel-group " id="accordion">
+						<input type="hidden" id="m" value="">
+						<!-- 我的账户部分 -->
+						<div class="panel panel-default menu-group">
+							<div class="panel-heading">
+								<h5 class="panel-title">
+									<span class="glyphicon glyphicon-user"> </span>
+									我的账户
+								</h5>
+							</div>
+							<div id="collapseOne" class="panel-collapse collapse in">
+								<div class="panel-body">
+									<table class="table">
+										<tr id="profile">
+											<td>
+												<span class="glyphicon glyphicon-pencil text-success"></span>
+												<a href="index.php?s=member/profile">基本资料</a>
+											</td>
+										</tr>
+										<tr id="address">
+											<td>
+												<span class="glyphicon glyphicon-send text-success"></span>
+												<a href="index.php?s=member/address">收货地址</a>
+											</td>
+										</tr>
+										<tr id="idcard">
+											<td>
+												<span class="glyphicon glyphicon-picture text-success"></span>
+												<a href="index.php?s=member/idcard">身份信息</a>
+											</td>
+										</tr>
+										<tr id="securitycenter">
+											<td>
+												<span class="glyphicon glyphicon-screenshot text-success"></span>
+												<a href="index.php?s=member/securitycenter">安全中心</a>
+											</td>
+										</tr>
+										<tr id="change-user-password">
+											<td>
+												<span class="glyphicon glyphicon-lock text-success"></span>
+												<a href="index.php?s=member/securitycenter/prepareChangeLoginPassword">修改密码</a>
+											</td>
+										</tr>
+									</table>
+								</div>
+							</div>
+						</div>
+						<!-- 我的订单 -->
+						<div class="panel panel-default menu-group">
+							<div class="panel-heading">
+								<h5 class="panel-title">
+									<span class="glyphicon glyphicon-list"> </span>
+									我的订单
+								</h5>
+							</div>
+							<div id="collapseTwo" class="panel-collapse collapse in">
+								<div class="panel-body">
+									<table class="table">
+										<tr id="order">
+											<td>
+												<span class="glyphicon glyphicon-list-alt text-success"></span>
+												<a href="index.php?s=member/order">订单管理</a>
+											</td>
+										</tr>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-9">
+			<div class="title">个人中心</div>
+			<div class="panel panel-default main-panel">
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-xs-2">
+							<img alt="" class="avatar" src="__IMG__/avatar.jpg">
+						</div>
+						<div class="col-xs-3">
+							<div class="row username-row">
+								
+									<a href="user">
+										691723840@qq.com
+									</a>
+								
+							</div>
+							<div class="row profile-row">
+								<a href="user/profile">编辑个人信息</a>
+							</div>
+						</div>
+						<div class="col-xs-3">
+							<div class="row password-row">
+								<a href="user/securitycenter/prepareChangeLoginPassword">修改密码</a>
+							</div>
+							<div class="row address-row">
+								<a href="user/address">收货地址管理</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default order-panel">
+				<div class="panel-heading panel-title">
+					<div class="order-link">已购买的商品</div>
+					<ul class="list-inline">
+						<li>
+							<a href="user/order" target="_blank">订单中心</a>
+						</li>
+						<li>
+							<a href="user/order?orderStatus=orderd" target="_blank">待付款(0)</a>
+						</li>
+						
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<include file="Public:footer" />
