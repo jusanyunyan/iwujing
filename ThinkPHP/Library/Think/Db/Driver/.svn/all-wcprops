@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/BaoJia_www/!svn/ver/1414/trunk/_core/Library/Think/Db/Driver
+END
+Mysql.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/BaoJia_www/!svn/ver/1414/trunk/_core/Library/Think/Db/Driver/Mysql.class.php
+END
+Oracle.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/BaoJia_www/!svn/ver/1414/trunk/_core/Library/Think/Db/Driver/Oracle.class.php
+END
+Pgsql.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/BaoJia_www/!svn/ver/1414/trunk/_core/Library/Think/Db/Driver/Pgsql.class.php
+END
+Sqlsrv.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/BaoJia_www/!svn/ver/1414/trunk/_core/Library/Think/Db/Driver/Sqlsrv.class.php
+END
+Mysqli.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/BaoJia_www/!svn/ver/1414/trunk/_core/Library/Think/Db/Driver/Mysqli.class.php
+END
+Mongo.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/BaoJia_www/!svn/ver/1414/trunk/_core/Library/Think/Db/Driver/Mongo.class.php
+END
+Mssql.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/BaoJia_www/!svn/ver/1414/trunk/_core/Library/Think/Db/Driver/Mssql.class.php
+END
+Sqlite.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/BaoJia_www/!svn/ver/1414/trunk/_core/Library/Think/Db/Driver/Sqlite.class.php
+END
+Pdo.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/BaoJia_www/!svn/ver/1414/trunk/_core/Library/Think/Db/Driver/Pdo.class.php
+END
+Ibase.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/BaoJia_www/!svn/ver/1414/trunk/_core/Library/Think/Db/Driver/Ibase.class.php
+END

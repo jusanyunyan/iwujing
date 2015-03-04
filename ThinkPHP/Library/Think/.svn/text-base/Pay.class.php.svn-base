@@ -1,0 +1,136 @@
+<?php
+// +----------------------------------------------------------------------
+// | Baojao [ WE CAN DO IT JUST THINK IT ]
+// +----------------------------------------------------------------------
+// | Copyright (c) 2013 http://www.baojia.com All rights reserved.
+// +----------------------------------------------------------------------
+// | Author: 纪道星 <xiaoxing_yy@126.com> <http://www.baojia.com>
+// +----------------------------------------------------------------------
+/**
+ * 通用支付接口类
+ * @author yunwuxin<448901948@qq.com>
+ */
+
+namespace Think;
+class Pay {
+
+    /**
+     * 支付驱动实例
+     * @var Object
+     */
+    private $payer;
+
+    /**
+     * 配置参数
+     * @var type 
+     */
+    private $config;
+
+    /**
+     * 构造方法，用于构造上传实例
+     * @param string $driver 要使用的支付驱动
+     * @param array  $config 配置
+     */
+    public function __construct($driver, $config = array()) {
+        //登录验证
+        /*define('UID', is_login());
+        
+        if (!UID) {
+                redirect(U('/Home/User/login/reffer/'.get_current_url()),3, '页面跳转中...');	
+                exit;
+        } */
+        /* 配置 */
+		
+        $pos = strrpos($driver, '\\');
+        $pos = $pos === false ? 0 : $pos + 1;
+        $apitype = strtolower(substr($driver, $pos));
+		$_SERVER[HTTP_ORIGIN]=$_SERVER[HTTP_ORIGIN] ? $_SERVER[HTTP_ORIGIN] :"http://www.baojia.com";
+		//异步curl等请求回调
+        $this->config['notify_url'] =$_SERVER[HTTP_ORIGIN]."/Member-Public-notify-apitype-$apitype-method-notify";
+        //同步地址跳转回调
+		$this->config['return_url'] =$_SERVER[HTTP_ORIGIN]."/Member-Public-notify-apitype-$apitype-method-return";
+        $config = array_merge($this->config, $config);
+
+        /* 设置支付驱动 */
+        $class = strpos($driver, '\\') ? $driver : 'Think\\Pay\\Driver\\' . ucfirst(strtolower($driver));
+		$this->setDriver($class, $config);
+		
+    }
+
+    public function buildRequestForm(Pay\PayVo $vo) {
+        $this->payer->check();
+        $param=$vo->getParam();
+        $paytype=$param['paytype'];
+		$oid=id_decode($param['oid'],2);
+		$uid=$param['uid'];
+		$type=$param['type'] ? $param['type'] : 0;
+		if($type==1){$typename="违章押金";}else{$typename="车辆押金";}
+        unset($param['paytype']);
+		unset($param['oid']);
+		unset($param['uid']);
+		unset($param['type']);
+		//生成支付编号
+       $zfid=M("TradePaymentGenerate")->add(array("trade_order_id"=>$oid,"type"=>"02","status"=>"0"));	
+	   $pay = new \Think\Pay($paytype, C('payment.' . $paytype));
+       $order_no = $pay->createOrderNo($uid,$zfid,3);
+        //生成本地记录数据
+        $check = M("TradePayment")->add(array(
+            'pay_status'=>0,
+            'amount'=> $vo->getFee(),
+            'pay_mode'=>3,
+            'pay_channel_id'=>1,
+            'user_id'=>$uid,
+            'paid_time'=>"",
+            'create_time'=>time(),
+            'update_time'=>time(),
+            'transaction_id'=>$order_no,
+            'transaction_code'=>'',
+            'result'=>"",
+            'account_no'=>"",
+            'account_name'=>"",
+            'receipt_account_no'=>"",
+			'busi_title'=>$typename,
+			'busi_code'=>$type,
+        ));
+        
+        if ($check !== false) {
+
+			     //支付返回日志
+					$operations1['user_id']=$uid;
+					$operations1['trade_order_id']=$oid;
+					$operations1['payment_id']=$check;
+					$operations1['type']=1;
+					$operations1['bank_type']="unionPay";
+					
+				//写入支付所包括的订单
+				$save_trade_order_payment=M("TradeOrderPayment")->add(array("order_id"=>$oid,"payment_id"=>$check)); 
+				if($save_trade_order_payment){
+				    $vo->setOrderNo($order_no);
+                    return $this->payer->buildRequestForm($vo,$operations1);     	
+				}
+
+        } else {
+            E(M("TradePayment")->getDbError());
+        }
+    }
+
+    /**
+     * 设置支付驱动
+     * @param string $class 驱动类名称
+     */
+    private function setDriver($class, $config) {
+        $this->payer = new $class($config);
+        if (!$this->payer) {
+            E("不存在支付驱动：{$class}");
+        }
+    }
+
+    public function __call($method, $arguments) {
+        if (method_exists($this, $method)) {
+            return call_user_func_array(array(&$this, $method), $arguments);
+        } elseif (!empty($this->payer) && $this->payer instanceof Pay\Pay && method_exists($this->payer, $method)) {
+            return call_user_func_array(array(&$this->payer, $method), $arguments);
+        }
+    }
+
+}
